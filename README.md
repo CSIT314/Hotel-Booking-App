@@ -10,3 +10,6 @@ These are thing that could be done to improve the app:
 - The cancellation policy is that if it's <=2 day before check_in_date, 50% money should be detected. The popup showing this message doesn't work. 
 - Implement a better reviews system that does not recalculate every single time. 
 - User Account page: Add exception handling to prevent errors from happening when users try to click cancel/modify functions without selecting an option.
+
+# This is based on
+https://github.com/rohitdwivedula/Hotel-Booking-App
