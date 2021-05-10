@@ -30,7 +30,7 @@ public class DBConnection {
         try{
             String[] connDetails = getConnection();
          //       Class.forName("com.mysql.jdbc.Driver");  // MySQL database connection
-            Connection conn = DriverManager.getConnection("jdbc:mysql://"+connDetails[0]+":"+connDetails[1]+"/"+connDetails[2]+"",connDetails[3],connDetails[4]);
+            Connection conn = DriverManager.getConnection("jdbc:mysql://"+connDetails[0]+":"+connDetails[1]+"/"+connDetails[2],connDetails[3],connDetails[4]);
             Statement stat = conn.createStatement();
             ResultSet RSet = stat.executeQuery(S);
             return RSet;
@@ -43,7 +43,7 @@ public class DBConnection {
     public static void InsertRow(String S){
         try{
             String[] connDetails = getConnection();
-            Connection conn = DriverManager.getConnection("jdbc:mysql://"+connDetails[0]+":"+connDetails[1]+"/"+connDetails[2]+"",connDetails[3],connDetails[4]);
+            Connection conn = DriverManager.getConnection("jdbc:mysql://"+connDetails[0]+":"+connDetails[1]+"/"+connDetails[2],connDetails[3],connDetails[4]);
             Statement stat = conn.createStatement();
             stat.executeUpdate(S);
         }catch(SQLException se){

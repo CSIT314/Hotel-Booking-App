@@ -5,7 +5,6 @@ import java.io.*;
 public class ReadandWrite {
     private String textFile;
     private String line = null;
-    private Controller control;
 
     public ReadandWrite(String txtFile){
         this.textFile = txtFile;
