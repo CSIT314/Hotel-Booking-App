@@ -16,12 +16,12 @@ jobs:
       - name: Build with maven
         run: mvn -B package --file pom.xml
         working-directory: ${{env.working-directory}}
-      - name: Test 
-        run: mvn test
-        working-directory: ${{env.working-directory}}
       - name: Artifact
         working-directory: ${{env.working-directory}}
         run: mkdir artifact && cp target/*.jar artifact
+      - name: Test 
+        run: mvn test
+        working-directory: ${{env.working-directory}}
       - uses: actions/upload-artifact@v1
         with:
           name: Package
