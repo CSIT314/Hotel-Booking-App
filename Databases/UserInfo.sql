@@ -8,4 +8,4 @@ CREATE TABLE user_info(
 	password VARCHAR(255) NOT NULL
 );
 
-INSERT INTO user_info VALUES ("test","test","test","test");
+INSERT INTO user_info VALUES ("test","test","test","1999-03-20","test","test@test.com","test");
