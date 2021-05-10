@@ -25,8 +25,8 @@ public class BookingConfirmation extends javax.swing.JFrame {
     String image;
     String WiFi, Car_Rental, AC, Swimming_Pool, Comp_BF;
     static String username;
-    static String yes = "/resources/Yes.png";
-    static String no = "/resources/No.png";
+    static String yes = "/Yes.png";
+    static String no = "/No.png";
     BookingConfirmation(String username, int HID, String Hotel, String Address, String City, int tariff, Date inDate, Date outDate) {
         this.username = username;
         this.HID = HID;
@@ -37,7 +37,7 @@ public class BookingConfirmation extends javax.swing.JFrame {
         this.Address = Address;
         this.City = City;
         days = getDateDifference(checkOut, checkIn) + 1;
-        image = "/resources/";
+        image = "/";
         if(HID%3 == 0){
             Description = "Located in close proximity of the Airport and Bus Stand,  " + Hotel + " offers you premium rooms at extremely affordable rates. ";
             Description += "Book your room today, and leave your stay on us!\n";
