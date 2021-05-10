@@ -25,8 +25,8 @@ public class BookingConfirmation extends javax.swing.JFrame {
     String image;
     String WiFi, Car_Rental, AC, Swimming_Pool, Comp_BF;
     static String username;
-    static String yes = "/home/rohit/Desktop/Hotel-Booking-App/App/media/Yes.png";
-    static String no = "/home/rohit/Desktop/Hotel-Booking-App/App/media/No.png";
+    static String yes = "/Yes.png";
+    static String no = "/No.png";
     BookingConfirmation(String username, int HID, String Hotel, String Address, String City, int tariff, Date inDate, Date outDate) {
         this.username = username;
         this.HID = HID;
@@ -37,7 +37,7 @@ public class BookingConfirmation extends javax.swing.JFrame {
         this.Address = Address;
         this.City = City;
         days = getDateDifference(checkOut, checkIn) + 1;
-        image = "/home/rohit/Desktop/Hotel-Booking-App/App/media/";
+        image = "/";
         if(HID%3 == 0){
             Description = "Located in close proximity of the Airport and Bus Stand,  " + Hotel + " offers you premium rooms at extremely affordable rates. ";
             Description += "Book your room today, and leave your stay on us!\n";
@@ -137,7 +137,7 @@ public class BookingConfirmation extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        Image.setIcon(new javax.swing.ImageIcon(image));
+        Image.setIcon(new javax.swing.ImageIcon(getClass().getResource(image)));
         Image.setText("Image");
 
         HotelName.setFont(new java.awt.Font("Noto Sans Mono CJK TC Regular", 1, 18)); // NOI18N
