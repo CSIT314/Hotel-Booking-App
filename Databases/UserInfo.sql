@@ -4,3 +4,5 @@ CREATE TABLE user_info(
 	lastName VARCHAR(255) NOT NULL,
 	password VARCHAR(255) NOT NULL
 );
+
+INSERT INTO user_info VALUES ("test","test","test","test");

@@ -8,7 +8,6 @@ public class ReadandWrite {
 
     public ReadandWrite(String txtFile){
         this.textFile = txtFile;
-        this.control = control;
         File file = new File(textFile);
         try {
             file.createNewFile();

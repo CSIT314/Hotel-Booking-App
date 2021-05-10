@@ -23,7 +23,7 @@ public class DBConnection {
 
     private static String[] getConnection() {
         ReadandWrite env = new ReadandWrite("./.env");
-        return env.read().split("\n", 5);
+        return env.read().split(";", 5);
     }
 
     public static ResultSet getResult(String S){
