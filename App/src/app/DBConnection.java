@@ -13,15 +13,24 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import app.ReadandWrite;
+
 /**
  *
  * @author rohit
  */
 public class DBConnection {
+
+    private static String[] getConnection() {
+        ReadandWrite env = new ReadandWrite("./.env");
+        return env.read().split("\n", 5);
+    }
+
     public static ResultSet getResult(String S){
         try{
+            String[] connDetails = getConnection();
          //       Class.forName("com.mysql.jdbc.Driver");  // MySQL database connection
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel_booking_app","root","123456789");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://"+connDetails[0]+":"+connDetails[1]+"/"+connDetails[2]+"",connDetails[3],connDetails[4]);
             Statement stat = conn.createStatement();
             ResultSet RSet = stat.executeQuery(S);
             return RSet;
@@ -33,7 +42,8 @@ public class DBConnection {
     
     public static void InsertRow(String S){
         try{
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/hotel_booking_app","root","123456789");
+            String[] connDetails = getConnection();
+            Connection conn = DriverManager.getConnection("jdbc:mysql://"+connDetails[0]+":"+connDetails[1]+"/"+connDetails[2]+"",connDetails[3],connDetails[4]);
             Statement stat = conn.createStatement();
             stat.executeUpdate(S);
         }catch(SQLException se){
