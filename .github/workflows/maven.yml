@@ -18,7 +18,9 @@ jobs:
         working-directory: ${{env.working-directory}}
       - name: Artifact
         working-directory: ${{env.working-directory}}
-        run: mkdir artifact && cp target/*.jar artifact && cp .env artifact && cp -r target/lib artifact
+        run: printf $ENVFILE > .env && mkdir artifact && cp target/*.jar artifact && cp .env artifact && cp -r target/lib artifact
+        env:
+          ENVFILE: ${{secrets.ENVFILE}}
       - name: Test 
         run: mvn test
         working-directory: ${{env.working-directory}}
