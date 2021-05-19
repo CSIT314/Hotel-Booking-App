@@ -123,7 +123,7 @@ public class UtilTest {
                 Date dateout = Date.valueOf(read.nextLine());
                 System.out.println("SQL date in " + datein);
                 System.out.println("SQL date out " + dateout);
-                System.out.println("output of checkAvailability() = " + testSubject.checkAvailability(HID,datein, dateout));
+                System.out.println("\noutput of checkAvailability() = " + testSubject.checkAvailability(HID,datein, dateout));
                 i++;
             }
         } catch (FileNotFoundException ex) {
