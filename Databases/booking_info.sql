@@ -9,6 +9,8 @@ Date_Out DATE NOT NULL,
 ID_Type VARCHAR(24),
 ID_Number VARCHAR(255),
 Status INT NOT NULL,
+Booking_Date DATE NOT NULL,
+Total_Price INT NOT NULL,
 PRIMARY KEY (Booking_ID),
 FOREIGN KEY (username) REFERENCES user_info(username)
 );
