@@ -8,6 +8,8 @@ Date_In DATE NOT NULL,
 Date_Out DATE NOT NULL,
 ID_Type VARCHAR(24),
 ID_Number VARCHAR(255),
+Booking_Date DATE NOT NULL,
+Price INT NOT NULL,
 Status INT NOT NULL,
 PRIMARY KEY (Booking_ID),
 FOREIGN KEY (username) REFERENCES user_info(username)
