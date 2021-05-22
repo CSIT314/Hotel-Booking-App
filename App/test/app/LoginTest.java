@@ -92,10 +92,12 @@ public class LoginTest {
         username = (JTextField) TestUtils.getChildNamed(frame, "jTextField1");
         password = (JPasswordField) TestUtils.getChildNamed(frame, "jPasswordField1");
         button = (JButton) TestUtils.getChildNamed(frame, "jButton1");
+        assertNotNull("Can't access the JButton for Login component",button);
 
         username.setText("test");
         password.setText("test");
 
+        System.out.println("Invoke Login Button");
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 button.doClick();
@@ -114,8 +116,12 @@ public class LoginTest {
         frame = new Login();
         frame.setVisible(true);
 
+        //Testing the existance of Register button
         button = (JButton) TestUtils.getChildNamed(frame, "Register");
+        assertNotNull("Can't access the JButton for Register component",button);
         
+        //Testing the used of Register button
+        System.out.println("Invoked Register Button");
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 button.doClick();
@@ -125,6 +131,9 @@ public class LoginTest {
     }
 
     private boolean insertUser(String username, String password, String testCase) {
+
+        //Feed data to user info for testing the login function
+
         String query = "INSERT INTO user_info (username, firstname, lastname, password, DOB, address,email) VALUES(\"" + username + "\",\"test\",\"test\",\"" + password + "\",\"1987-01-01\",\"test\",\"" + testCase + "\")";
         try {
             InsertRow(query);
@@ -136,6 +145,8 @@ public class LoginTest {
     }
 
     private boolean deleteUser(String testCase) {
+
+        // Delete query after finished testing
         String query = "DELETE FROM user_info WHERE email=\"" + testCase + "\"";
         try {
             InsertRow(query);
