@@ -208,7 +208,7 @@ public class Login extends javax.swing.JFrame {
     
     
     
-private boolean validate_login(String username,String password) {
+public boolean validate_login(String username,String password) {
      try
      {
        String query="SELECT * FROM user_info WHERE username=\""+username+"\"";

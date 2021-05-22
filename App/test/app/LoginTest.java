@@ -89,7 +89,7 @@ public class LoginTest {
         // Still researching on this
     }
 
-    public boolean insertUser(String username, String password, String testCase) {
+    private boolean insertUser(String username, String password, String testCase) {
         String query = "INSERT INTO user_info (username, firstname, lastname, password, DOB, address,email) VALUES(\"" + username + "\",\"test\",\"test\",\"" + password + "\",\"1987-01-01\",\"test\",\"" + testCase + "\")";
         try {
             InsertRow(query);
@@ -100,7 +100,7 @@ public class LoginTest {
         }
     }
 
-    public boolean deleteUser(String testCase) {
+    private boolean deleteUser(String testCase) {
         String query = "DELETE FROM user_info WHERE email=\"" + testCase + "\"";
         try {
             InsertRow(query);
@@ -112,7 +112,7 @@ public class LoginTest {
     }
 
     // generate random character in java 
-    public String generateAlphaNumeric(int lowMargin, int topMargin) {
+    private String generateAlphaNumeric(int lowMargin, int topMargin) {
         int leftLimit = 48; // numeral '0'
         int rightLimit = 122; // letter 'z'
         Random random = new Random();
