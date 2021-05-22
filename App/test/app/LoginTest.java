@@ -112,12 +112,12 @@ public class LoginTest {
     }
 
     // generate random character in java 
-    private String generateAlphaNumeric(int lowMargin, int topMargin) {
+    private String generateAlphaNumeric(int topMargin) {
         int leftLimit = 48; // numeral '0'
         int rightLimit = 122; // letter 'z'
         Random random = new Random();
 
-        int targetStringLength = lowMargin + (random.nextInt() % (topMargin - lowMargin) + 1);
+        int targetStringLength = topMargin;
 
         String generatedString = random.ints(leftLimit, rightLimit + 1)
         .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
@@ -144,8 +144,8 @@ public class LoginTest {
             System.out.println("\nTest Case Number : "+i);
 
             // generate random username and password for database
-            String username = generateAlphaNumeric(12,36);
-            String password = generateAlphaNumeric(8,16);
+            String username = generateAlphaNumeric(36);
+            String password = generateAlphaNumeric(16);
             System.out.println("Generated username and password : "+username+" "+password);
 
             // insert user to database after random generation
@@ -173,8 +173,8 @@ public class LoginTest {
             System.out.println("\nTest Case Number : "+i);
 
             // generate random username and password for database
-            String username = generateAlphaNumeric(12,36);
-            String password = generateAlphaNumeric(8,16);
+            String username = generateAlphaNumeric(36);
+            String password = generateAlphaNumeric(16);
             System.out.println("Generated username and password : "+username+" "+password);
 
             // validate login using the validate login function
