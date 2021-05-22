@@ -65,4 +65,14 @@ public class LoginTest {
         assertEquals("test", username.getText());
         assertEquals("test", new String(password.getPassword()));
     }
+
+    @Test
+    public void testLoginTrue() {
+
+    }
+
+    @Test
+    public void testLoginFalse() {
+
+    }
 }
