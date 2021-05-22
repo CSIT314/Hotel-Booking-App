@@ -74,7 +74,7 @@ public class LoginTest {
         assertEquals("test", username.getText());
         assertEquals("test", new String(password.getPassword()));
 
-        frame = null
+        frame = null;
     }
 
     @Test
@@ -180,5 +180,7 @@ public class LoginTest {
             // validate login using the validate login function
             assertEquals(false, frame.validate_login(username, password));
         }
+
+        frame = null;
     }
 }
