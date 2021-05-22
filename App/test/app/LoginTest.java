@@ -94,7 +94,7 @@ public class LoginTest {
         try {
             InsertRow(query);
             return true;
-        }catch(SQLException se){
+        }catch(Exception se){
             se.printStackTrace();
             return false;
         }
@@ -105,7 +105,7 @@ public class LoginTest {
         try {
             InsertRow(query);
             return true;
-        }catch(SQLException se){
+        }catch(Exception se){
             se.printStackTrace();
             return false;
         }
