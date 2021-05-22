@@ -80,7 +80,25 @@ public class LoginTest {
     @Test
     public void testLoginButton() {
         System.out.println("\nTest [2] Test button functionality");
-        // Still researching on this
+        Login frame;
+
+        JTextField username;
+        JPasswordField password;
+        JButton button;
+
+        frame = new Login();
+        frame.setVisible(true);
+
+        username = (JTextField) TestUtils.getChildNamed(frame, "jTextField1");
+        password = (JPasswordField) TestUtils.getChildNamed(frame, "jPasswordField1");
+        botton = (JButton) TestUtils.getChildNamed(frame, "jButton1");
+
+        username.setText("test");
+        password.setText("test");
+
+        botton.postActionEvent();
+
+        frame = null;
     }
 
     @Test
