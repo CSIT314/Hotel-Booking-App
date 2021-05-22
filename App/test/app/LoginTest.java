@@ -96,7 +96,7 @@ public class LoginTest {
         username.setText("test");
         password.setText("test");
 
-        button.postActionEvent();
+        button.doClick();
 
         frame = null;
     }
