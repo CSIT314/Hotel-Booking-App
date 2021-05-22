@@ -104,7 +104,18 @@ public class LoginTest {
     @Test
     public void testRegisterButton() {
         System.out.println("\nTest [3] Test Register functionality");
-        // Still researching on this
+        
+        Login frame;
+        JButton button;
+
+        frame = new Login();
+        frame.setVisible(true);
+
+        button = (JButton) TestUtils.getChildIndexed(frame, "Register", 0);
+        
+        button.doClick();
+
+        frame = null;
     }
 
     private boolean insertUser(String username, String password, String testCase) {
