@@ -137,7 +137,7 @@ public class LoginTest {
         Login frame = new Login();
         frame.setVisible(true);
 
-        String testCaseId = generateAlphaNumeric(5,9);
+        String testCaseId = generateAlphaNumeric(9);
         System.out.println("Test CaseID of "+testCaseId);
 
         for (int i = 0; i<numberofTest; i++) {
