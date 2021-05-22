@@ -91,12 +91,15 @@ public class LoginTest {
 
         username = (JTextField) TestUtils.getChildNamed(frame, "jTextField1");
         password = (JPasswordField) TestUtils.getChildNamed(frame, "jPasswordField1");
-        button = (JButton) TestUtils.getChildIndexed(frame, "jButton1", 0);
+        button = (JButton) TestUtils.getChildIndexed(frame, "jButton1");
 
         username.setText("test");
         password.setText("test");
 
-        button.doClick();
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                button.doClick();
+            }});
 
         frame = null;
     }
@@ -111,9 +114,12 @@ public class LoginTest {
         frame = new Login();
         frame.setVisible(true);
 
-        button = (JButton) TestUtils.getChildIndexed(frame, "Register", 0);
+        button = (JButton) TestUtils.getChildIndexed(frame, "Register");
         
-        button.doClick();
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                button.doClick();
+            }});
 
         frame = null;
     }
