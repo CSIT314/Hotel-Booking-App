@@ -91,12 +91,12 @@ public class LoginTest {
 
         username = (JTextField) TestUtils.getChildNamed(frame, "jTextField1");
         password = (JPasswordField) TestUtils.getChildNamed(frame, "jPasswordField1");
-        botton = (JButton) TestUtils.getChildNamed(frame, "jButton1");
+        button = (JButton) TestUtils.getChildNamed(frame, "jButton1");
 
         username.setText("test");
         password.setText("test");
 
-        botton.postActionEvent();
+        button.postActionEvent();
 
         frame = null;
     }
