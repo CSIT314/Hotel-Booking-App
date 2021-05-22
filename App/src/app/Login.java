@@ -34,6 +34,7 @@ public class Login extends javax.swing.JFrame {
         jButton1.setName("jButton1");
         jTextField1.setName("jTextField1");
         jPasswordField1.setName("jPasswordField1");
+        Register.setName("Register");
     }
 
 
