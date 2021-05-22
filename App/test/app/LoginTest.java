@@ -146,6 +146,7 @@ public class LoginTest {
             // generate random username and password for database
             String username = generateAlphaNumeric(12,36);
             String password = generateAlphaNumeric(8,16);
+            System.out.println("Generated username and password : "+username+" "+password);
 
             // insert user to database after random generation
             insertUser(username,password,testCaseId);
@@ -174,6 +175,7 @@ public class LoginTest {
             // generate random username and password for database
             String username = generateAlphaNumeric(12,36);
             String password = generateAlphaNumeric(8,16);
+            System.out.println("Generated username and password : "+username+" "+password);
 
             // validate login using the validate login function
             assertEquals(false, frame.validate_login(username, password));
