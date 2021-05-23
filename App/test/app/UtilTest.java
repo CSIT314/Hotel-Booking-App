@@ -92,7 +92,7 @@ public class UtilTest {
                 assertEquals("testing date converted to sql date", new java.sql.Date(date2.getTime()), testSubject.convertDate(date2));
                 i++;
             } catch (ParseException ex) {
-                Logger.getLogger(newJavaFile.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UtilTest.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
