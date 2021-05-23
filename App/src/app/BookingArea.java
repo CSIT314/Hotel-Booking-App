@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -31,7 +32,19 @@ public class BookingArea extends javax.swing.JFrame {
      */
     public BookingArea(String username) {
         this.username = username;
-        initComponents();        
+        initComponents();  
+        setComponentsNames();
+    }
+    
+    private void setComponentsNames() {
+        AC.setName("AC");
+        CarRental.setName("CarRental");
+        CompBF.setName("CompBF");
+        Pool.setName("Pool");
+        Wifi.setName("Wifi");
+        City.setName("City");
+        MaxPrice.setName("MaxPrice");
+        HotelsAvailable.setName("HotelsAvailable");
     }
     
     private String[] getCityList(){
@@ -45,8 +58,8 @@ public class BookingArea extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         String[] city_names = cities.toArray(new String[0]);  
-        for(int i=0;i<city_names.length;i++)
-            System.out.println(city_names[i]);
+        //for(int i=0;i<city_names.length;i++)
+        //    System.out.println(city_names[i]);
         return city_names;
     }
     
@@ -81,7 +94,6 @@ public class BookingArea extends javax.swing.JFrame {
                 String hotel = RSet.getString("Hotel_Name");
                 String address = RSet.getString("Address");
                 int tariff = RSet.getInt("Tariff");
-                
                 
                 int rating = 0;
                 int num_of_ratings = 0;
