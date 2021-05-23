@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -31,7 +32,16 @@ public class BookingArea extends javax.swing.JFrame {
      */
     public BookingArea(String username) {
         this.username = username;
-        initComponents();        
+        initComponents();  
+        setComponentsNames();
+    }
+    
+    private void setComponentsNames() {
+        AC.setName("AC");
+        CarRental.setName("CarRental");
+        CompBF.setName("CompBF");
+        Pool.setName("Pool");
+        Wifi.setName("Wifi");
     }
     
     private String[] getCityList(){

@@ -29,6 +29,7 @@ import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.junit.Assert;
 
 
 /**
@@ -64,20 +65,16 @@ public class BookingAreaTest {
         //Declare Testing Variables
         String username;
         BookingArea bookingArea;     
-        JCheckBox AC;
+        
         JButton BookNow;
-        JCheckBox CarRental;
         org.jdesktop.swingx.JXDatePicker CheckInDate;
         org.jdesktop.swingx.JXDatePicker CheckOutDate;
         JComboBox<String> City;
-        JCheckBox CompBF;
         JTable HotelsAvailable;
         JScrollPane HotelsScrollArea;
         JSlider MaxPrice;
         JLabel MaxPriceLabel;
-        JCheckBox Pool;
         JButton Search;
-        JCheckBox Wifi;
         JButton myAccount;
         // End of variables declaration                
         
@@ -96,34 +93,71 @@ public class BookingAreaTest {
         bookingArea = new BookingArea(username);
         bookingArea.setVisible(true);
        
-        AC = (JCheckBox)TestUtils.getChildNamed(bookingArea, "AC");
         BookNow = (JButton)TestUtils.getChildNamed(bookingArea, "BookNow");
-        CarRental = (JCheckBox)TestUtils.getChildNamed(bookingArea, "CarRental");
         CheckInDate = (org.jdesktop.swingx.JXDatePicker)TestUtils.getChildNamed(bookingArea, "CheckInDate");
         CheckOutDate = (org.jdesktop.swingx.JXDatePicker)TestUtils.getChildNamed(bookingArea, "CheckOutDate");
         City = (JComboBox<String>)TestUtils.getChildNamed(bookingArea, "City");
-        CompBF = (JCheckBox)TestUtils.getChildNamed(bookingArea, "CompBF");
         HotelsAvailable = (JTable)TestUtils.getChildNamed(bookingArea, "HotelsAvailable");
         HotelsScrollArea = (JScrollPane)TestUtils.getChildNamed(bookingArea, "HotelsScrollArea");
         MaxPrice = (JSlider)TestUtils.getChildNamed(bookingArea, "MaxPrice");
-        Pool = (JCheckBox)TestUtils.getChildNamed(bookingArea, "Pool");
         Search = (JButton)TestUtils.getChildNamed(bookingArea, "Search");
-        Wifi = (JCheckBox)TestUtils.getChildNamed(bookingArea, "Wifi");
         myAccount = (JButton)TestUtils.getChildNamed(bookingArea, "myAccount");
-       
-        
-        
-        
-        
         
         Random rand = new Random(); //instance of random class
         int citylimit = 7;
         //generate random values from 0-7 for cities
         int mCity = rand.nextInt(citylimit); 
+    }
+    
+    @Test
+    public void checkBoxChecked(){
+        //Declaration
+        String username;
+        BookingArea frame;
+        JCheckBox AC;
+        JCheckBox CarRental;
+        JCheckBox CompBF;
+        JCheckBox Pool;
+        JCheckBox Wifi;
         
-       
+        //Initialisation
+        username = "test";
+        frame = new BookingArea(username);
+        frame.setVisible(true);
+        
+        AC = (JCheckBox)TestUtils.getChildNamed(frame, "AC");
+        CarRental = (JCheckBox)TestUtils.getChildNamed(frame, "CarRental");
+        CompBF = (JCheckBox)TestUtils.getChildNamed(frame, "CompBF");
+        Pool = (JCheckBox)TestUtils.getChildNamed(frame, "Pool");
+        Wifi = (JCheckBox)TestUtils.getChildNamed(frame, "Wifi");
         
         
+        //Check the Checkboxes
+        try{
+        AC.setSelected(true);
+        CarRental.setSelected(true);
+        CompBF.setSelected(true);
+        Pool.setSelected(true);
+        Wifi.setSelected(true);
+  
+        //Checkboxes cannot be null
+        assertNotNull("Can't access the AC for BookingAreaTest component",AC);
+        assertNotNull("Can't access the CarRental for BookingAreaTest component",CarRental);
+        assertNotNull("Can't access the CompBF for BookingAreaTest component",CompBF);
+        assertNotNull("Can't access the Pool for BookingAreaTest component",Pool);
+        assertNotNull("Can't access the Wifi for BookingAreaTest component",Wifi);
+        
+        //Test if checked
+        Assert.assertTrue(AC.isSelected());
+        Assert.assertTrue(CarRental.isSelected());
+        Assert.assertTrue(CompBF.isSelected());
+        Assert.assertTrue(Pool.isSelected());
+        Assert.assertTrue(Wifi.isSelected());
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        frame = null;
     }
     
     
