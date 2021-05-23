@@ -34,6 +34,7 @@ public class Login extends javax.swing.JFrame {
         jButton1.setName("jButton1");
         jTextField1.setName("jTextField1");
         jPasswordField1.setName("jPasswordField1");
+        Register.setName("Register");
     }
 
 
@@ -208,7 +209,7 @@ public class Login extends javax.swing.JFrame {
     
     
     
-private boolean validate_login(String username,String password) {
+public boolean validate_login(String username,String password) {
      try
      {
        String query="SELECT * FROM user_info WHERE username=\""+username+"\"";
