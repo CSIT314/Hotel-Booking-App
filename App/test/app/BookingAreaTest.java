@@ -60,53 +60,113 @@ public class BookingAreaTest {
     /**
      * Test of main method, of class BookingArea.
      */
+    
+//    JTable HotelsAvailable;
+//    JScrollPane HotelsScrollArea;
+//    
+//    JButton Search;
+//    JButton myAccount;
+//    JButton BookNow;
+//    
+//    BookNow = (JButton)TestUtils.getChildNamed(bookingArea, "BookNow");
+//    HotelsAvailable = (JTable)TestUtils.getChildNamed(bookingArea, "HotelsAvailable");
+//    HotelsScrollArea = (JScrollPane)TestUtils.getChildNamed(bookingArea, "HotelsScrollArea");
+//    
+//    Search = (JButton)TestUtils.getChildNamed(frame, "Search");
+//    myAccount = (JButton)TestUtils.getChildNamed(fram, "myAccount");
     @Test
-    public void BookingAreaFill() {
+    public void testMaxPrice(){
         //Declare Testing Variables
         String username;
-        BookingArea bookingArea;     
-        
-        JButton BookNow;
-        org.jdesktop.swingx.JXDatePicker CheckInDate;
-        org.jdesktop.swingx.JXDatePicker CheckOutDate;
-        JComboBox<String> City;
-        JTable HotelsAvailable;
-        JScrollPane HotelsScrollArea;
+        BookingArea frame;
         JSlider MaxPrice;
-        JLabel MaxPriceLabel;
-        JButton Search;
-        JButton myAccount;
-        // End of variables declaration                
         
         //Declare Testing area
-        System.out.println("Booking Area");
+        System.out.println("BookingAreaTest testMaxPrice");
         
-        /*
-            Constuct Booking areas, get attributes, set text and get output value.
-            Check whether the input is equal to the output.
-
-            1. Get the names of each component
-            2. Test input and output
-        */
-        
+        //Initiatlise
         username = "test";
-        bookingArea = new BookingArea(username);
-        bookingArea.setVisible(true);
-       
-        BookNow = (JButton)TestUtils.getChildNamed(bookingArea, "BookNow");
-        CheckInDate = (org.jdesktop.swingx.JXDatePicker)TestUtils.getChildNamed(bookingArea, "CheckInDate");
-        CheckOutDate = (org.jdesktop.swingx.JXDatePicker)TestUtils.getChildNamed(bookingArea, "CheckOutDate");
-        City = (JComboBox<String>)TestUtils.getChildNamed(bookingArea, "City");
-        HotelsAvailable = (JTable)TestUtils.getChildNamed(bookingArea, "HotelsAvailable");
-        HotelsScrollArea = (JScrollPane)TestUtils.getChildNamed(bookingArea, "HotelsScrollArea");
-        MaxPrice = (JSlider)TestUtils.getChildNamed(bookingArea, "MaxPrice");
-        Search = (JButton)TestUtils.getChildNamed(bookingArea, "Search");
-        myAccount = (JButton)TestUtils.getChildNamed(bookingArea, "myAccount");
+        frame = new BookingArea(username);
+        frame.setVisible(true);
         
-        Random rand = new Random(); //instance of random class
-        int citylimit = 7;
-        //generate random values from 0-7 for cities
-        int mCity = rand.nextInt(citylimit); 
+        MaxPrice = (JSlider)TestUtils.getChildNamed(frame, "MaxPrice");
+      
+        //Test
+        try{
+            Random rand = new Random(); //instance of random class
+            int randPrice = rand.nextInt(99000 + 50); //generate random values from 50-99000 for cities
+            
+            MaxPrice.setValue(randPrice);
+            System.out.println("Max Price set to " + randPrice);
+            
+            assertNotNull("Can't access the MaxPrice for BookingAreaTest testMaxPrice",MaxPrice);
+         
+            Assert.assertEquals(randPrice, MaxPrice.getValue());
+            
+            System.out.println("BookingAreaTest testMaxPrice successful");
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        frame = null;
+    }
+    
+    
+    @Test
+    public void testCitySelection() {
+        //Declare Testing Variables
+        String username;
+        BookingArea frame;     
+        JComboBox<String> City;             
+        
+        //Declare Testing area
+        System.out.println("Booking Area Test testCitySelection");
+        
+        //Initiatlise
+        username = "test";
+        frame = new BookingArea(username);
+        frame.setVisible(true);
+        String cities[] = getCityList();
+       
+        //Test
+        try{
+            City = (JComboBox<String>)TestUtils.getChildNamed(frame, "City");
+        
+            City.setModel(new javax.swing.DefaultComboBoxModel(getCityList())); //Set combo box
+            
+            System.out.println("City selection JComboBox set");
+
+            Random rand = new Random(); //instance of random class
+            int randCity = rand.nextInt(8); //generate random values from 0-7 for cities
+            City.setSelectedIndex(randCity); //set city randomly
+            
+            assertNotNull("Can't access the City for BookingAreaTest CityTest",City);
+            
+            System.out.println(City.getSelectedItem().toString() + " Selected in Jcombobox"); // Print selected city
+            Assert.assertTrue(City.getSelectedItem().toString().equals(cities[randCity])); //Assert that the selected item is selected
+
+            System.out.println("City selection passed test");
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        frame = null;
+    }
+    
+    private String[] getCityList(){
+        ResultSet RSet = getResult("SELECT DISTINCT City FROM room_info");
+        ArrayList<String> cities = new ArrayList<>(); 
+        try {
+            while(RSet.next()){
+                cities.add(RSet.getString("City"));
+            }
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        String[] city_names = cities.toArray(new String[0]);  
+        //for(int i=0;i<city_names.length;i++)
+            //System.out.println(city_names[i]);
+        return city_names;
     }
     
     @Test
@@ -121,6 +181,7 @@ public class BookingAreaTest {
         JCheckBox Wifi;
         
         //Initialisation
+        System.out.println("Booking Area Test checkBoxChecked");
         username = "test";
         frame = new BookingArea(username);
         frame.setVisible(true);
@@ -139,6 +200,8 @@ public class BookingAreaTest {
         CompBF.setSelected(true);
         Pool.setSelected(true);
         Wifi.setSelected(true);
+        
+        System.out.println("Booking Area Test checkBoxes have been checked");
   
         //Checkboxes cannot be null
         assertNotNull("Can't access the AC for BookingAreaTest component",AC);
@@ -147,18 +210,22 @@ public class BookingAreaTest {
         assertNotNull("Can't access the Pool for BookingAreaTest component",Pool);
         assertNotNull("Can't access the Wifi for BookingAreaTest component",Wifi);
         
+        System.out.println("Booking Area Test checkBoxes are not null");
+        
         //Test if checked
         Assert.assertTrue(AC.isSelected());
         Assert.assertTrue(CarRental.isSelected());
         Assert.assertTrue(CompBF.isSelected());
         Assert.assertTrue(Pool.isSelected());
         Assert.assertTrue(Wifi.isSelected());
+        
+        System.out.println("Booking Area Test checkBoxChecked Passed");
         }
         catch(Exception e){
             e.printStackTrace();
         }
+        
         frame = null;
     }
-    
     
 }

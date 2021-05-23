@@ -42,6 +42,9 @@ public class BookingArea extends javax.swing.JFrame {
         CompBF.setName("CompBF");
         Pool.setName("Pool");
         Wifi.setName("Wifi");
+        City.setName("City");
+        MaxPrice.setName("MaxPrice");
+        
     }
     
     private String[] getCityList(){
@@ -55,8 +58,8 @@ public class BookingArea extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         String[] city_names = cities.toArray(new String[0]);  
-        for(int i=0;i<city_names.length;i++)
-            System.out.println(city_names[i]);
+        //for(int i=0;i<city_names.length;i++)
+        //    System.out.println(city_names[i]);
         return city_names;
     }
     
@@ -91,7 +94,6 @@ public class BookingArea extends javax.swing.JFrame {
                 String hotel = RSet.getString("Hotel_Name");
                 String address = RSet.getString("Address");
                 int tariff = RSet.getInt("Tariff");
-                
                 
                 int rating = 0;
                 int num_of_ratings = 0;
