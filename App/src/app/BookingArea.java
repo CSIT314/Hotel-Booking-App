@@ -44,7 +44,7 @@ public class BookingArea extends javax.swing.JFrame {
         Wifi.setName("Wifi");
         City.setName("City");
         MaxPrice.setName("MaxPrice");
-        
+        HotelsAvailable.setName("HotelsAvailable");
     }
     
     private String[] getCityList(){

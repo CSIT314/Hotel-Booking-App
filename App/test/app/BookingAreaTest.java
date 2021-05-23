@@ -60,8 +60,18 @@ public class BookingAreaTest {
     /**
      * Test of main method, of class BookingArea.
      */
-    
-//    JTable HotelsAvailable;
+    //Declaration
+        String username;
+        DefaultTableModel model;
+        BookingArea frame;
+        JSlider MaxPrice;
+        JCheckBox AC;
+        JCheckBox CarRental;
+        JCheckBox CompBF;
+        JCheckBox Pool;
+        JCheckBox Wifi;
+        JComboBox<String> City; 
+        JTable HotelsAvailable;
 //    JScrollPane HotelsScrollArea;
 //    
 //    JButton Search;
@@ -69,18 +79,12 @@ public class BookingAreaTest {
 //    JButton BookNow;
 //    
 //    BookNow = (JButton)TestUtils.getChildNamed(bookingArea, "BookNow");
-//    HotelsAvailable = (JTable)TestUtils.getChildNamed(bookingArea, "HotelsAvailable");
-//    HotelsScrollArea = (JScrollPane)TestUtils.getChildNamed(bookingArea, "HotelsScrollArea");
 //    
+//    HotelsScrollArea = (JScrollPane)TestUtils.getChildNamed(bookingArea, "HotelsScrollArea");
 //    Search = (JButton)TestUtils.getChildNamed(frame, "Search");
 //    myAccount = (JButton)TestUtils.getChildNamed(fram, "myAccount");
     @Test
     public void testMaxPrice(){
-        //Declare Testing Variables
-        String username;
-        BookingArea frame;
-        JSlider MaxPrice;
-        
         //Declare Testing area
         System.out.println("BookingAreaTest testMaxPrice");
         
@@ -113,12 +117,7 @@ public class BookingAreaTest {
     
     
     @Test
-    public void testCitySelection() {
-        //Declare Testing Variables
-        String username;
-        BookingArea frame;     
-        JComboBox<String> City;             
-        
+    public void testCitySelection() {    
         //Declare Testing area
         System.out.println("Booking Area Test testCitySelection");
         
@@ -137,7 +136,7 @@ public class BookingAreaTest {
             System.out.println("City selection JComboBox set");
 
             Random rand = new Random(); //instance of random class
-            int randCity = rand.nextInt(8); //generate random values from 0-7 for cities
+            int randCity = rand.nextInt(6); //generate random values from 0-6 for cities
             City.setSelectedIndex(randCity); //set city randomly
             
             assertNotNull("Can't access the City for BookingAreaTest CityTest",City);
@@ -171,15 +170,6 @@ public class BookingAreaTest {
     
     @Test
     public void checkBoxChecked(){
-        //Declaration
-        String username;
-        BookingArea frame;
-        JCheckBox AC;
-        JCheckBox CarRental;
-        JCheckBox CompBF;
-        JCheckBox Pool;
-        JCheckBox Wifi;
-        
         //Initialisation
         System.out.println("Booking Area Test checkBoxChecked");
         username = "test";
@@ -226,6 +216,66 @@ public class BookingAreaTest {
         }
         
         frame = null;
+    }
+    
+    @Test
+    public void testUpdateListing(){
+    
+        //Initialisation
+        System.out.println("BookingAreaTest testUpdateListing");
+        username = "test";
+        frame = new BookingArea(username);
+        frame.setVisible(true);
+        
+        String cities[] = getCityList();
+        HotelsAvailable = (JTable)TestUtils.getChildNamed(frame, "HotelsAvailable");
+        
+        City = (JComboBox<String>)TestUtils.getChildNamed(frame, "City");
+        City.setModel(new javax.swing.DefaultComboBoxModel(getCityList())); //Set combo box
+        System.out.println("City selection JComboBox set");
+
+        Random rand = new Random(); //instance of random class
+        int randCity = rand.nextInt(7); //generate random values from 0-6 for cities
+        City.setSelectedIndex(randCity); //set city randomly
+        
+        String query= "SELECT * FROM room_info WHERE city=\""+City.getSelectedItem()+"\"";
+
+        System.out.println(query);
+        ResultSet RSet = getResult(query);
+        int i=0;
+        model = (DefaultTableModel) HotelsAvailable.getModel();
+        model.setRowCount(0);
+        try {
+            while(RSet.next()){
+                int HID = RSet.getInt("Hotel_ID");
+                String hotel = RSet.getString("Hotel_Name");
+                String address = RSet.getString("Address");
+                int tariff = RSet.getInt("Tariff");
+                
+                int rating = 0;
+                int num_of_ratings = 0;
+                float final_rating = 0;
+                ResultSet a = getResult("SELECT rating from hotel_reviews WHERE Hotel_ID = " + HID + ";");
+                while(a.next()){
+                    rating += a.getInt("rating");
+                    num_of_ratings++;
+                }
+                if(num_of_ratings != 0)
+                    final_rating = (float) ((1.00 * rating)/num_of_ratings);
+                else{
+                    rating = 0;
+                    num_of_ratings = 0;
+                }
+                String RatingToDisplay = "" + final_rating + "(" + num_of_ratings + ")";
+                Object row[] = {HID, hotel, address, tariff, RatingToDisplay};
+                model.addRow(row);
+                
+                Assert.assertNotNull(model);
+                System.out.println("BookingAreaTest testUpdateListing Passed and table is able to populate listing");
+            }
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
     
 }
