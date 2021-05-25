@@ -5,8 +5,6 @@ package app;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import static app.DBConnection.getResult;
-import app.Utilities;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -14,17 +12,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 //import java.util.Date;
 import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.GregorianCalendar;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static org.junit.Assert.assertNotNull;
 
 /**
  *
@@ -92,7 +88,7 @@ public class UtilTest {
                 assertEquals("testing date converted to sql date", new java.sql.Date(date2.getTime()), testSubject.convertDate(date2));
                 i++;
             } catch (ParseException ex) {
-                Logger.getLogger(newJavaFile.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UtilTest.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -102,6 +98,9 @@ public class UtilTest {
     @Test
     public void testGetDateDifference() {
         System.out.println("\nTesting getDateDifference()...");
+        GregorianCalendar gc = new GregorianCalendar();
+        GregorianCalendar gc2 = new GregorianCalendar();
+        SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
         int i = 1;
         try {
             File dates = new File("datediff.txt");
@@ -118,7 +117,7 @@ public class UtilTest {
                 System.out.println("SQL date 1 " + date1);
                 System.out.println("SQL date 2 " + date2);
                 System.out.println("output of getDateDifference() = " + testSubject.getDateDifference(date1, date2));
-
+                /*
                 String query = "DATEDIFF(\"" + date1 + "\", \"" + date2 + "\")";
                 ResultSet rs;
                 int n = 0;
@@ -127,14 +126,45 @@ public class UtilTest {
                     rs.next();
                     n = rs.getInt(query);
                     System.out.println("diff = " + n);
-                    
-                    
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-                assertEquals("testing date diff to sql date", n, testSubject.getDateDifference(date1, date2));
+                 */
+
+                double diffInTime = date1.getTime() - date2.getTime();
+                long diffInDays = Math.round(diffInTime / (1000 * 60 * 60 * 24));
+
+                System.out.println(diffInDays);
+                assertEquals("testing date diff", diffInDays, testSubject.getDateDifference(date1, date2));
                 i++;
+
+            }
+            System.out.println("\nTesting random getDateDifference()...");
+            for (int k = 0; k < 10; k++) {
+                System.out.println("\nTest " + i);
+                int year = 2021 + (int) Math.round(Math.random() * (2022 - 2021));
+                gc.set(gc.YEAR, year);
+                int dayOfYear = 1 + (int) Math.round(Math.random() * (gc.getActualMaximum(gc.DAY_OF_YEAR) - 1));
+                gc.set(gc.DAY_OF_YEAR, dayOfYear);
+                String randdate1 = formater.format(gc.getTime());
+                System.out.println(randdate1);
+                java.sql.Date randdate2 =  new java.sql.Date(gc.getTimeInMillis());
                 
+                int year2 = 2021 + (int) Math.round(Math.random() * (2022 - 2021));
+                gc2.set(gc2.YEAR, year2);
+                int dayOfYear2 = 1 + (int) Math.round(Math.random() * (gc2.getActualMaximum(gc2.DAY_OF_YEAR) - 1));
+                gc2.set(gc2.DAY_OF_YEAR, dayOfYear2);
+                String randdate3 = formater.format(gc2.getTime());
+                System.out.println(randdate3);
+                java.sql.Date randdate4 =  new java.sql.Date(gc2.getTimeInMillis());
+                //Date testDate2 = new java.sql.Date(randdate4.getTime());
+                                
+                double diffInTime = randdate2.getTime() - randdate4.getTime();
+                long diffInDays = Math.round(diffInTime / (1000 * 60 * 60 * 24));
+
+                System.out.println(diffInDays);
+                assertEquals("testing date diff", diffInDays, testSubject.getDateDifference(randdate2, randdate4));
+                i++;
             }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(UtilTest.class.getName()).log(Level.SEVERE, null, ex);
@@ -148,7 +178,7 @@ public class UtilTest {
     // in that date range at the specified hotel
     @Test
     public void testCheckAvailability() {
-        System.out.println("\nTesting getDateDifference()...");
+        System.out.println("\nTesting CheckAvailability()...");
         int i = 1;
         try {
             File dates = new File("datesavail.txt");
@@ -164,6 +194,11 @@ public class UtilTest {
                 System.out.println("SQL date in " + datein);
                 System.out.println("SQL date out " + dateout);
                 System.out.println("\noutput of checkAvailability() = " + testSubject.checkAvailability(HID, datein, dateout));
+
+                
+                assertNotNull("output of checkAvailability() cannot be null = " + testSubject.checkAvailability(HID, datein, dateout));
+                //assertEquals(" = " testAvail + testSubject.checkAvailability(HID, datein, dateout));
+                System.out.println(datein);
                 i++;
             }
         } catch (FileNotFoundException ex) {
