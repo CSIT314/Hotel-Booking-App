@@ -21,6 +21,12 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static org.junit.Assert.assertNotNull;
+import static app.DBConnection.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 /**
  *
@@ -93,6 +99,26 @@ public class UtilTest {
         }
     }
 
+    private Date randDate() {
+        GregorianCalendar gc = new GregorianCalendar();
+        SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
+
+        int year = 2021; //+ (int) Math.round(Math.random() * (2022 - 2021));
+        gc.set(gc.YEAR, year);
+
+        int month = 5 + (int) (Math.round(Math.random()) * (6 - 5));
+        gc.set(gc.MONTH, month);
+
+        int dayOfMonth = 1 + (int) Math.round(Math.random() * (1 - gc.getActualMaximum(gc.DAY_OF_MONTH)));
+        gc.set(gc.DAY_OF_MONTH, dayOfMonth);
+
+        String rdate = formater.format(gc.getTime());
+        System.out.println(rdate);
+        java.sql.Date randdate = new java.sql.Date(gc.getTimeInMillis());
+
+        return randdate;
+    }
+
     //  testing the method getDateDifference()in Utilities it taks two dates of
     // SQL format and calculates the difference in days between them
     @Test
@@ -141,29 +167,15 @@ public class UtilTest {
             }
             System.out.println("\nTesting random getDateDifference()...");
             for (int k = 0; k < 10; k++) {
-                System.out.println("\nTest " + i);
-                int year = 2021 + (int) Math.round(Math.random() * (2022 - 2021));
-                gc.set(gc.YEAR, year);
-                int dayOfYear = 1 + (int) Math.round(Math.random() * (gc.getActualMaximum(gc.DAY_OF_YEAR) - 1));
-                gc.set(gc.DAY_OF_YEAR, dayOfYear);
-                String randdate1 = formater.format(gc.getTime());
-                System.out.println(randdate1);
-                java.sql.Date randdate2 =  new java.sql.Date(gc.getTimeInMillis());
-                
-                int year2 = 2021 + (int) Math.round(Math.random() * (2022 - 2021));
-                gc2.set(gc2.YEAR, year2);
-                int dayOfYear2 = 1 + (int) Math.round(Math.random() * (gc2.getActualMaximum(gc2.DAY_OF_YEAR) - 1));
-                gc2.set(gc2.DAY_OF_YEAR, dayOfYear2);
-                String randdate3 = formater.format(gc2.getTime());
-                System.out.println(randdate3);
-                java.sql.Date randdate4 =  new java.sql.Date(gc2.getTimeInMillis());
-                //Date testDate2 = new java.sql.Date(randdate4.getTime());
-                                
-                double diffInTime = randdate2.getTime() - randdate4.getTime();
+
+                Date rDate1 = randDate();
+                Date rDate2 = randDate();
+
+                double diffInTime = rDate1.getTime() - rDate2.getTime();
                 long diffInDays = Math.round(diffInTime / (1000 * 60 * 60 * 24));
 
                 System.out.println(diffInDays);
-                assertEquals("testing date diff", diffInDays, testSubject.getDateDifference(randdate2, randdate4));
+                assertEquals("testing date diff", diffInDays, testSubject.getDateDifference(rDate1, rDate2));
                 i++;
             }
         } catch (FileNotFoundException ex) {
@@ -172,13 +184,94 @@ public class UtilTest {
 
     }
 
+    private boolean insertBookings() {
+        Date datein = null;
+        Date dateout = null;
+        int bookID = 900000;
+        int HID = 0;
+
+        for (int i = 0; i < 2; i++) {
+            bookID = bookID + (i + 1);
+            for (int k = 0; k < 24; k++) {
+                try {
+                    datein = randDate();
+                    dateout = randDate();
+                    bookID = bookID + (k + 1);
+                    HID = k + 1;
+                    //HID = 1 + (int) (Math.random() * (29 - 1));
+                    System.out.println("this is not right ?? " + HID);
+                    System.out.println("this is not right ?? " + datein);
+                    System.out.println("this is not right ?? " + dateout);
+
+                    if (datein.compareTo(dateout) > 0) {
+                        System.out.println("datein > dateout? " + datein + " " + dateout);
+                        Date temp = datein;
+                        datein = dateout;
+                        dateout = temp;
+                        System.out.println(datein + " " + dateout);
+                    } else if (datein.compareTo(dateout) < 0) {
+                        System.out.println("datein < dateout? " + datein + " " + dateout);
+
+                    }
+
+                    //insert into booking info for testing testCheckAvailability()
+                    String query = "INSERT INTO booking_info (Booking_ID, username, Hotel_ID, rooms_confirmed, rooms_waitlist, Date_In, Date_Out, ID_Type, ID_Number, Status, Booking_Date, Total_Price) VALUES(\"" + bookID + "\",\"kye\",\"" + HID + "\",1,0,\"" + datein + "\",\"" + dateout + "\",\"Student ID Card\",\"123456\",0,CURDATE(),500)";
+                    InsertRow(query);
+
+                } catch (Exception se) {
+                    se.printStackTrace();
+                    System.out.println("fail");
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private void deleteBookings() {
+
+        // Delete rows inserted for testing after finished
+        String query = "DELETE FROM booking_info WHERE username=\"kye\"";
+        try {
+            InsertRow(query);
+        } catch (Exception se) {
+            se.printStackTrace();
+        }
+    }
+
     // testing the method checkAvailability() in Utilities it takes an int 
     // that represents the hotel ID, and two SQL date objects as checkin date
     // and checkout date then checks the database to see if any rooms are available
     // in that date range at the specified hotel
     @Test
     public void testCheckAvailability() {
+        ResultSet rs;
+        String query = "SELECT * FROM booking_info WHERE username=\"kye\"";
+        rs = getResult(query);
+        /*try {
+            while (rs.next()) {
+                int booking_ID = rs.getInt("Booking_ID");
+                String username = rs.getString("username");
+                int Hotel_ID = rs.getInt("Hotel_ID");
+                int rooms_confirmed = rs.getInt("rooms_confirmed");
+                int rooms_waitlist = rs.getInt("rooms_waitlist");
+                Date Date_In = rs.getDate("Date_In");
+                Date Date_Out = rs.getDate("Date_Out");
+                String ID_Type = rs.getString("ID_Type");
+                String ID_Number = rs.getString("ID_Number");
+                int Status = rs.getInt("Status");
+                Date Booking_Date = rs.getDate("Booking_Date");
+                int Total_Price = rs.getInt("Total_Price");
+
+                System.out.println("booking_ID " + booking_ID + ", username " + username + ", Hotel_ID " + Hotel_ID + ", rooms_confirmed " + rooms_confirmed
+                        + ", rooms_waitlist " + rooms_waitlist + ", Date_In " + Date_In + ", Date_Out " + Date_Out + ", ID_Type " + ID_Type + ", ID_Number " + ID_Number + ", Status " + Status + ", Booking_Date " + Booking_Date + ", Total_Price " + Total_Price);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UtilTest.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
+        deleteBookings();
         System.out.println("\nTesting CheckAvailability()...");
+        insertBookings();
         int i = 1;
         try {
             File dates = new File("datesavail.txt");
@@ -191,18 +284,46 @@ public class UtilTest {
                 int HID = Integer.parseInt(read.nextLine());
                 Date datein = Date.valueOf(read.nextLine());
                 Date dateout = Date.valueOf(read.nextLine());
+
+                /*
+                String query = "INSERT INTO booking_info (Booking_ID, username, Hotel_ID, rooms_confirmed, rooms_waitlist, Date_In, Date_Out, ID_Type, ID_Number, Status, Booking_Date, Total_Price) VALUES(\"" + 900000 + "\",\"kye\",\"" + HID + "\",\" 1 \",\"0\",\"" + datein + "\",\"" + dateout + "\",\"test\",\"test\",\"0\",\"1987-01-01\",\"500\")";
+                try {                                                                                                                                                                                         //Booking_ID, username, Hotel_ID, rooms_confirmed, rooms_waitlist, Date_In, Date_Out, ID_Type, ID_Number, Status, Booking_Date, Total_Price
+                    InsertRow(query);
+                } catch (Exception se) {
+                    se.printStackTrace();
+                }
+                 */
                 System.out.println("SQL date in " + datein);
                 System.out.println("SQL date out " + dateout);
                 System.out.println("\noutput of checkAvailability() = " + testSubject.checkAvailability(HID, datein, dateout));
 
-                
-                assertNotNull("output of checkAvailability() cannot be null = " + testSubject.checkAvailability(HID, datein, dateout));
+                //assertNotNull("output of checkAvailability() cannot be null = " + testSubject.checkAvailability(HID, datein, dateout));
                 //assertEquals(" = " testAvail + testSubject.checkAvailability(HID, datein, dateout));
                 System.out.println(datein);
                 i++;
+
             }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(UtilTest.class.getName()).log(Level.SEVERE, null, ex);
         }
+        for (int j = 0; j < 9; j++) {
+            System.out.println("\nTest " + i);
+            Date datein = randDate();
+            Date dateout = randDate();
+            if (datein.compareTo(dateout) > 0) {
+                System.out.println("datein > dateout? " + datein + " " + dateout);
+                Date temp = datein;
+                datein = dateout;
+                dateout = temp;
+                System.out.println(datein + " " + dateout);
+            }
+            int HID = 1 + (int) (Math.random() * (25 - 1));
+
+            System.out.println("SQL date in " + datein);
+            System.out.println("SQL date out " + dateout);
+            System.out.println("\noutput of checkAvailability() = " + testSubject.checkAvailability(HID, datein, dateout));
+            i++;
+        }
+        deleteBookings();
     }
 }
