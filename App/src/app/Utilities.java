@@ -81,10 +81,11 @@ public class Utilities {
                 j = n - getDateDifference(DateOut, rs.getDate("Date_Out"));
                 for(int k=i;k<=j;k++){
                     days[k]++;
-                }
+                }/*
                 for(int k=i;k<=j;k++){
                     days[k]++;
-                }
+                    System.out.println(days[k]);
+                }*/
             }
             //CASE 3
             rs = getResult(query + " AND Date_In >= \"" + DateIn + "\" AND Date_In <= \"" + DateOut + "\" AND Date_Out > \"" + DateOut + "\";");
