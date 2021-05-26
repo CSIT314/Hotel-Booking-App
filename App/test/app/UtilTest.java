@@ -216,14 +216,13 @@ public class UtilTest {
 
                 //insert into booking info for testing testCheckAvailability()
                 query = query+"(\"" + bookID + "\",\"kye\",\"" + HID + "\",1,0,\"" + datein + "\",\"" + dateout + "\",\"Student ID Card\",\"123456\",0,CURDATE(),500)";
-                if (i != 1 && k != 24) {
+                if (i != 2 && k != 24) {
                     query = query + ",";
                 }
             }
         }
         try {
             InsertRow(query);
-            System.out.println(query);
         }catch (Exception se) {
             se.printStackTrace();
             System.out.println("fail");
