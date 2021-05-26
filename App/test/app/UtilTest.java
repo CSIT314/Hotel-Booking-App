@@ -223,6 +223,7 @@ public class UtilTest {
         }
         try {
             InsertRow(query);
+            System.out.println(query);
         }catch (Exception se) {
             se.printStackTrace();
             System.out.println("fail");
