@@ -36,10 +36,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jdesktop.swingx.JXDatePicker;
 
-/**
- *
- * @author lakia
- */
 public class ModifyBookingTest {
 
     String username;
