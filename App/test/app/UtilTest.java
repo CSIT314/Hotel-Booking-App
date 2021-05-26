@@ -215,12 +215,7 @@ public class UtilTest {
                 }
 
                 //insert into booking info for testing testCheckAvailability()
-<<<<<<< HEAD
-                query = query + "(\"" + bookID + "\",\"kye\",\"" + HID + "\",1,0,\"" + datein + "\",\"" + dateout + "\",\"Student ID Card\",\"123456\",\"0\",CURDATE(),\"500\")";
-                
-=======
                 query = query+"(\"" + bookID + "\",\"kye\",\"" + HID + "\",1,0,\"" + datein + "\",\"" + dateout + "\",\"Student ID Card\",\"123456\",0,CURDATE(),500)";
->>>>>>> 56421530c06665ca22bd2f7d362b7df5b6cd82f4
                 if (i == 1 && k == 23) {
                     continue;
                 } else {
@@ -231,12 +226,8 @@ public class UtilTest {
         System.out.println(query);
         try {
             InsertRow(query);
-<<<<<<< HEAD
         } catch (Exception se) {
-=======
             System.out.println(query);
-        }catch (Exception se) {
->>>>>>> 56421530c06665ca22bd2f7d362b7df5b6cd82f4
             se.printStackTrace();
             System.out.println("fail");
             return false;
