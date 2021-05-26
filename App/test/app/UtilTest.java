@@ -189,41 +189,44 @@ public class UtilTest {
         Date dateout = null;
         int bookID = 900000;
         int HID = 0;
+        String query = "INSERT INTO booking_info (Booking_ID, username, Hotel_ID, rooms_confirmed, rooms_waitlist, Date_In, Date_Out, ID_Type, ID_Number, Status, Booking_Date, Total_Price) VALUES ";
 
         for (int i = 0; i < 2; i++) {
             bookID = bookID + (i + 1);
             for (int k = 0; k < 24; k++) {
-                try {
-                    datein = randDate();
-                    dateout = randDate();
-                    bookID = bookID + (k + 1);
-                    HID = k + 1;
-                    //HID = 1 + (int) (Math.random() * (29 - 1));
-                    System.out.println("this is not right ?? " + HID);
-                    System.out.println("this is not right ?? " + datein);
-                    System.out.println("this is not right ?? " + dateout);
+                datein = randDate();
+                dateout = randDate();
+                bookID = bookID + (k + 1);
+                HID = k + 1;
+                //HID = 1 + (int) (Math.random() * (29 - 1));
+                System.out.println("this is not right ?? " + HID);
+                System.out.println("this is not right ?? " + datein);
+                System.out.println("this is not right ?? " + dateout);
 
-                    if (datein.compareTo(dateout) > 0) {
-                        System.out.println("datein > dateout? " + datein + " " + dateout);
-                        Date temp = datein;
-                        datein = dateout;
-                        dateout = temp;
-                        System.out.println(datein + " " + dateout);
-                    } else if (datein.compareTo(dateout) < 0) {
-                        System.out.println("datein < dateout? " + datein + " " + dateout);
+                if (datein.compareTo(dateout) > 0) {
+                    System.out.println("datein > dateout? " + datein + " " + dateout);
+                    Date temp = datein;
+                    datein = dateout;
+                    dateout = temp;
+                    System.out.println(datein + " " + dateout);
+                } else if (datein.compareTo(dateout) < 0) {
+                    System.out.println("datein < dateout? " + datein + " " + dateout);
 
-                    }
+                }
 
-                    //insert into booking info for testing testCheckAvailability()
-                    String query = "INSERT INTO booking_info (Booking_ID, username, Hotel_ID, rooms_confirmed, rooms_waitlist, Date_In, Date_Out, ID_Type, ID_Number, Status, Booking_Date, Total_Price) VALUES(\"" + bookID + "\",\"kye\",\"" + HID + "\",1,0,\"" + datein + "\",\"" + dateout + "\",\"Student ID Card\",\"123456\",0,CURDATE(),500)";
-                    InsertRow(query);
-
-                } catch (Exception se) {
-                    se.printStackTrace();
-                    System.out.println("fail");
-                    return false;
+                //insert into booking info for testing testCheckAvailability()
+                query = query+"(\"" + bookID + "\",\"kye\",\"" + HID + "\",1,0,\"" + datein + "\",\"" + dateout + "\",\"Student ID Card\",\"123456\",0,CURDATE(),500)";
+                if (i != 1 AND k != 24) {
+                    query = query + ",";
                 }
             }
+        }
+        try {
+            InsertRow(query);
+        }catch (Exception se) {
+            se.printStackTrace();
+            System.out.println("fail");
+            return false;
         }
         return true;
     }
