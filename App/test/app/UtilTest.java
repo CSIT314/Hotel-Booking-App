@@ -306,7 +306,7 @@ public class UtilTest {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(UtilTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-        for (int j = 0; j < 9; j++) {
+        for (int j = 0; j < 10; j++) {
             System.out.println("\nTest " + i);
             Date datein = randDate();
             Date dateout = randDate();
