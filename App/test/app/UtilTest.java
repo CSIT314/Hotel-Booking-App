@@ -215,19 +215,24 @@ public class UtilTest {
                 }
 
                 //insert into booking info for testing testCheckAvailability()
-                query = query+"(\"" + bookID + "\",\"kye\",\"" + HID + "\",1,0,\"" + datein + "\",\"" + dateout + "\",\"Student ID Card\",\"123456\",0,CURDATE(),500)";
-                if (i != 2 && k != 24) {
+                query = query + "(\"" + bookID + "\",\"kye\",\"" + HID + "\",1,0,\"" + datein + "\",\"" + dateout + "\",\"Student ID Card\",\"123456\",\"0\",CURDATE(),\"500\")";
+                
+                if (i == 1 && k == 23) {
+                    continue;
+                } else {
                     query = query + ",";
                 }
             }
         }
+        System.out.println(query);
         try {
             InsertRow(query);
-        }catch (Exception se) {
+        } catch (Exception se) {
             se.printStackTrace();
             System.out.println("fail");
             return false;
         }
+
         return true;
     }
 
@@ -307,7 +312,8 @@ public class UtilTest {
 
             }
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(UtilTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UtilTest.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         for (int j = 0; j < 10; j++) {
             System.out.println("\nTest " + i);
