@@ -253,10 +253,10 @@ public class UtilTest {
     // in that date range at the specified hotel
     @Test
     public void testCheckAvailability() {
-        ResultSet rs;
+        /*ResultSet rs;
         String query = "SELECT * FROM booking_info WHERE username=\"kye\"";
         rs = getResult(query);
-        /*try {
+        try {
             while (rs.next()) {
                 int booking_ID = rs.getInt("Booking_ID");
                 String username = rs.getString("username");
