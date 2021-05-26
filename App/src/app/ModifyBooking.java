@@ -29,8 +29,14 @@ public class ModifyBooking extends javax.swing.JFrame {
         this.username = username;
         this.bid = bookingID;
         initComponents();
+        setComponentsNames();
     }
-
+    
+    private void setComponentsNames() {
+        jButton1.setName("jButton1");
+        jXDatePicker1.setName("jXDatePicker1");
+        jXDatePicker2.setName("jXDatePicker2");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
