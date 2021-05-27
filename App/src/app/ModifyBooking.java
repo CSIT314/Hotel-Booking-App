@@ -20,8 +20,10 @@ import java.util.logging.Logger;
  * @author rohit
  */
 public class ModifyBooking extends javax.swing.JFrame {
+
     static String username;
     int bid;
+
     /**
      * Creates new form ModifyBooking
      */
@@ -29,6 +31,13 @@ public class ModifyBooking extends javax.swing.JFrame {
         this.username = username;
         this.bid = bookingID;
         initComponents();
+        setComponentsNames();
+    }
+
+    private void setComponentsNames() {
+        jButton1.setName("jButton1");
+        jXDatePicker1.setName("jXDatePicker1");
+        jXDatePicker2.setName("jXDatePicker2");
     }
 
     /**
@@ -125,16 +134,16 @@ public class ModifyBooking extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try{                                         
+        try {
             Date inDate, outDate;
-            try{
+            try {
                 inDate = convertDate(jXDatePicker1.getDate());
                 outDate = convertDate(jXDatePicker2.getDate());
-            }catch(java.lang.ArrayIndexOutOfBoundsException | java.lang.NullPointerException e){
+            } catch (java.lang.ArrayIndexOutOfBoundsException | java.lang.NullPointerException e) {
                 JOptionPane.showMessageDialog(null, "Please fill in dates properly", "WARNING!", JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            InsertRow("UPDATE booking_info SET Status=2 WHERE Booking_ID=\""+bid+"\";");
+            InsertRow("UPDATE booking_info SET Status=2 WHERE Booking_ID=\"" + bid + "\";");
             ResultSet rs = getResult("SELECT * FROM booking_info WHERE Booking_ID = " + bid);
             String id = rs.getString("ID_Number");
             int Hid = rs.getInt("Hotel_ID");
@@ -151,11 +160,11 @@ public class ModifyBooking extends javax.swing.JFrame {
             String query = "INSERT INTO booking_info VALUES (";
             int num_of_days = getDateDifference(outDate, inDate) + 1;
             int tariff = num_of_days * total_rooms;
-            rs = getResult("SELECT Tariff FROM room_info where Hotel_ID =" +  Hid + ";" );
+            rs = getResult("SELECT Tariff FROM room_info where Hotel_ID =" + Hid + ";");
             rs.next();
             int base_rate = rs.getInt("Tariff");
             tariff *= base_rate;
-            
+
             query = "INSERT INTO booking_info VALUES (";
             query += bid;
             query += ",\"";
@@ -163,47 +172,46 @@ public class ModifyBooking extends javax.swing.JFrame {
             query += "\", ";
             query += Hid;
             query += ", ";
-            
+
             int guests, rooms_confirmed, rooms_waitlisted, status, available_rooms;
-        available_rooms = checkAvailability(Hid, inDate, outDate);
-        if(available_rooms >= total_rooms){
-            rooms_confirmed = total_rooms;
-            rooms_waitlisted = 0;
-            status = 0;
-        }
-        else{
-            rooms_confirmed = available_rooms;
-            rooms_waitlisted = total_rooms - rooms_confirmed;
-            status = 1;
-        }
-            
-        query += rooms_confirmed;
-        query += ", ";
-        query += rooms_waitlisted;
-        query += ", \"";
-        query += inDate;
-        query += "\", \"";
-        query += outDate;
-        query += "\", \"";
-        query += IDType;
-        query += "\", \"";
-        query += IDNum;
-        query += "\", ";
-        query += status;
-        query+=", \"";
-        query += today;
-        query += "\", ";
-        query+= (tariff);
-        query += ");";
-        System.out.println(query);
-        InsertRow(query);
-        JOptionPane.showMessageDialog(null, "Your booking has been generated with booking ID" + bid, "Booking received." , JOptionPane.ERROR_MESSAGE); 
-        this.dispose();
-        new UserProfile(username).setVisible(true);
-        }catch(SQLException ex){
+            available_rooms = checkAvailability(Hid, inDate, outDate);
+            if (available_rooms >= total_rooms) {
+                rooms_confirmed = total_rooms;
+                rooms_waitlisted = 0;
+                status = 0;
+            } else {
+                rooms_confirmed = available_rooms;
+                rooms_waitlisted = total_rooms - rooms_confirmed;
+                status = 1;
+            }
+
+            query += rooms_confirmed;
+            query += ", ";
+            query += rooms_waitlisted;
+            query += ", \"";
+            query += inDate;
+            query += "\", \"";
+            query += outDate;
+            query += "\", \"";
+            query += IDType;
+            query += "\", \"";
+            query += IDNum;
+            query += "\", ";
+            query += status;
+            query += ", \"";
+            query += today;
+            query += "\", ";
+            query += (tariff);
+            query += ");";
+            System.out.println(query);
+            InsertRow(query);
+            JOptionPane.showMessageDialog(null, "Your booking has been generated with booking ID" + bid, "Booking received.", JOptionPane.ERROR_MESSAGE);
+            this.dispose();
+            new UserProfile(username).setVisible(true);
+        } catch (SQLException ex) {
             Logger.getLogger(ModifyBooking.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jXDatePicker1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jXDatePicker1ActionPerformed
