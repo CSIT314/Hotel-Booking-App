@@ -69,14 +69,16 @@ public class UserProfileTest {
     
     @Test
     public void CheckBookingsActionPerformedTest (){
-     System.out.println(" Testing CheckBookingsActionPerforme()");   
+        
     }
     
      @Test
     public void ModifyActionPerformedTest (){}
         
      @Test
-    public void RatingOptionActionPerformedTest (){}   
+    public void RatingOptionActionPerformedTest (){
+    assertNotNull("Can't access Booking_ID for RatingOptionActionPerformedTest "}
+    }   
         
         
 }
