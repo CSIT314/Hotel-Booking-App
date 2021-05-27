@@ -39,6 +39,7 @@ public class Utilities {
             rs = getResult("SELECT " + query+";");
             rs.next();
             n = rs.getInt(query);
+            rs.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -71,6 +72,7 @@ public class Utilities {
                 for(int i=0;i<=n;i++){
                     days[i] += 1;
                 }
+                System.out.println("case 1 " );
             }
             //CASE 2
             rs = getResult(query + " AND Date_In >= \"" + DateIn + "\" AND Date_Out <= \"" + DateOut + "\";");
@@ -81,7 +83,9 @@ public class Utilities {
                 j = n - getDateDifference(DateOut, rs.getDate("Date_Out"));
                 for(int k=i;k<=j;k++){
                     days[k]++;
-                }/*
+                }
+                System.out.println("case 2 ");
+                /*
                 for(int k=i;k<=j;k++){
                     days[k]++;
                     System.out.println(days[k]);
@@ -98,6 +102,7 @@ public class Utilities {
                 for(int k=i;k<=j;k++){
                     days[k]++;
                 }
+                System.out.println("case 3 " );
             }
             //CASE 4
             rs = getResult(query + " AND Date_In < \"" + DateIn + "\" AND Date_Out <= \"" + DateOut + "\" AND Date_Out >= \"" + DateIn + "\";");
@@ -109,6 +114,7 @@ public class Utilities {
                 for(int k=i;k<=j;k++){
                     days[k]++;
                 }
+                System.out.println("case 4 " );
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -118,12 +124,19 @@ public class Utilities {
             System.out.print(days[i] + " ");
             if(days[i] > rooms)
                 rooms = days[i];
+            System.out.println("rooms " + rooms );
         }
+        
         rs = getResult("SELECT Number_of_rooms FROM room_info WHERE Hotel_ID = " + HID +";");
         int return_val = 0;
         try {
             rs.next();
             return_val = (int) rs.getInt("Number_of_rooms") - rooms;
+        } catch (SQLException ex) {
+            Logger.getLogger(Utilities.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(Utilities.class.getName()).log(Level.SEVERE, null, ex);
         }
