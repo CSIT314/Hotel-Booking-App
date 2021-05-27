@@ -1,13 +1,37 @@
 package app;
 
+import app.UserProfile;
+
 import org.junit.Test;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import static org.junit.Assert.*;
 
-import static org.junit.Assert.assertEquals;
+import static app.DBConnection.InsertRow;
+import static app.Utilities.*;
+import static app.DBConnection.getResult;
+import java.awt.Dimension;
 
-public class TestApplication {
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Date;
 
-    @Test
-    public void randomTestTrue() {
-        assertEquals(7, 7);
-    }
-}
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * @author ARWA
+ */
