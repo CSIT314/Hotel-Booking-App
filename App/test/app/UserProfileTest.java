@@ -57,12 +57,12 @@ public class UserProfileTest {
 
     @Before
     public void setUp() {
-         this.testSubject = new UserProfile();
+         
     }
     
     @After
     public void tearDown() {
-        testSubject = null; 
+       
     }
   
 }
