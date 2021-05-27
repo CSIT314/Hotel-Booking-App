@@ -5,9 +5,6 @@ package app;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 //import java.util.Date;
@@ -17,15 +14,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static app.DBConnection.*;
 import static app.Utilities.getDateDifference;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
@@ -44,6 +37,7 @@ public class UtilTest {
     @After
     public void tearDown() throws Exception {
         testSubject = null;
+        InsertRow("truncate booking_info");
     }
 
     // testing the method convertDate() in Utilities it takes a date object and
@@ -51,34 +45,12 @@ public class UtilTest {
     @Test
     public void testConvertDate() {
         System.out.println("\nTesting convertDate()...");
+        
         // setting up a simple date formate for the date object
         GregorianCalendar gc = new GregorianCalendar();
         SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
         int i = 1;
-        try {
-            // opening and reading a file with a data set of dates for march
-            // 2021 where the first and last dates are invalid dates 
-            // 30/02/2021 and 01/13/2021
-            File dates = new File("convertdates.txt");
-            Scanner read = new Scanner(dates);
-            while (read.hasNextLine()) {
-                System.out.println("\nTest " + i);
-                String dateData = read.nextLine();
-                // turning the date from the data set into a date object
-                java.util.Date date1 = formater.parse(dateData);
-                // out put of the date from the data set, the date as a 
-                // date object and the sql date object it converts to
-                System.out.println("input date from data set = " + dateData);
-                System.out.println("input date oject from data = " + date1);
-                Date result = testSubject.convertDate(date1);
-                System.out.println("output SQL date of convertDate() = " + result);
-                assertEquals("testing date converted to sql date", new java.sql.Date(date1.getTime()), result);
-                i++;
-            }
-        } catch (ParseException | IOException ex) {
-            Logger.getLogger(UtilTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        System.out.println("\nTesting random dates with Testing convertDate()...");
+        
         for (int k = 0; k < 10; k++) {
             System.out.println("\nTest " + i);
             try {
@@ -91,8 +63,8 @@ public class UtilTest {
 
                 Date result = testSubject.convertDate(date2);
 
-                System.out.println("input random date = " + date1);
-                System.out.println("input date oject of random date = " + date2);
+                System.out.println("input date = " + date1);
+                System.out.println("input date oject = " + date2);
                 System.out.println("output SQL date of convertDate() = " + result);
                 assertEquals("testing date converted to sql date ", new java.sql.Date(date2.getTime()), result);
                 i++;
@@ -103,10 +75,11 @@ public class UtilTest {
     }
 
     private Date randDate() {
+        
         GregorianCalendar gc = new GregorianCalendar();
         SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
 
-        int year = 2021; //+ (int) Math.round(Math.random() * (2022 - 2021));
+        int year = 2021;
         gc.set(gc.YEAR, year);
 
         int month = 5 + (int) (Math.round(Math.random()) * (6 - 5));
@@ -126,55 +99,30 @@ public class UtilTest {
     @Test
     public void testGetDateDifference() {
         System.out.println("\nTesting getDateDifference()...");
-        GregorianCalendar gc = new GregorianCalendar();
-        GregorianCalendar gc2 = new GregorianCalendar();
-        SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
+        //System.out.println("\nTesting random getDateDifference()...");
         int i = 1;
-        try {
-            File dates = new File("datediff.txt");
-            Scanner read = new Scanner(dates);
-            while (read.hasNextLine()) {
                 // reading in the dataset of dates to be pased to the method
                 // and setting up the input date variables as SQL date 
                 // objects to be parsed 
-                System.out.println("\nTest " + i);
-                String dateData1 = read.nextLine();
-                String dateData2 = read.nextLine();
-                Date date1 = Date.valueOf(dateData1);
-                Date date2 = Date.valueOf(dateData2);
-                System.out.println("SQL date 1 " + date1);
-                System.out.println("SQL date 2 " + date2);
-
-                int result = testSubject.getDateDifference(date1, date2);
-                System.out.println("output of getDateDifference() = " + result);
-
-                double diffInTime = date1.getTime() - date2.getTime();
-                long diffInDays = Math.round(diffInTime / (1000 * 60 * 60 * 24));
-
-                System.out.println("result of test date difference " + diffInDays);
-                assertEquals("testing date diff", diffInDays, result);
-                i++;
-
-            }
-            System.out.println("\nTesting random getDateDifference()...");
+            
+            
             for (int k = 0; k < 10; k++) {
-
+                System.out.println("\nTest " + i);
                 Date rDate1 = randDate();
                 Date rDate2 = randDate();
+                System.out.println("date input 1 = " + rDate1);
+                System.out.println("date input 2 = " + rDate2);
+
+                double diffInTime = rDate1.getTime() - rDate2.getTime();
+                long diffInDays = Math.round(diffInTime / (1000 * 60 * 60 * 24));
+                System.out.println("difference in days = " + diffInDays);
 
                 int result = testSubject.getDateDifference(rDate1, rDate2);
                 System.out.println("output of getDateDifference() = " + result);
 
-                double diffInTime = rDate1.getTime() - rDate2.getTime();
-                long diffInDays = Math.round(diffInTime / (1000 * 60 * 60 * 24));
-
-                System.out.println(diffInDays);
                 assertEquals("testing date diff", diffInDays, result);
                 i++;
             }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(UtilTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
     }
 
@@ -229,7 +177,7 @@ public class UtilTest {
         } catch (Exception se) {
             se.printStackTrace();
         }
-        System.out.println("deleting rows inserted for testing");
+        System.out.println("\ndeleting rows inserted for testing");
     }
 
     // testing the method checkAvailability() in Utilities it takes an int 
@@ -242,49 +190,26 @@ public class UtilTest {
         System.out.println("\nTesting CheckAvailability()...");
         insertBookings();
         int i = 1;
-        try {
-            File dates = new File("datesavail.txt");
-            Scanner read = new Scanner(dates);
-            while (read.hasNextLine()) {
-                System.out.println("\nTest " + i);
-                // reading in the dataset of hotel ID and dates to be parsed
-                // to the method and setting up the dates from the data set
-                // as SQL date objects
-                int HID = Integer.parseInt(read.nextLine());
-                Date datein = Date.valueOf(read.nextLine());
-                Date dateout = Date.valueOf(read.nextLine());
 
-                System.out.println("SQL date in " + datein);
-                System.out.println("SQL date out " + dateout);
-                System.out.println("\noutput of checkAvailability() = " + testSubject.checkAvailability(HID, datein, dateout));
-
-                //assertNotNull("output of checkAvailability() cannot be null = " + testSubject.checkAvailability(HID, datein, dateout));
-                //assertEquals(" = " testAvail + testSubject.checkAvailability(HID, datein, dateout));
-                System.out.println(datein);
-                i++;
-
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(UtilTest.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
-        for (int j = 0; j < 10; j++) {
+        // reading in the dataset of hotel ID and dates to be parsed
+        // to the method and setting up the dates from the data set
+        // as SQL date objects
+        for (int j = 0; j < 11; j++) {
             System.out.println("\nTest " + i);
             Date datein = randDate();
             Date dateout = randDate();
             if (datein.compareTo(dateout) > 0) {
-                System.out.println("datein > dateout? " + datein + " " + dateout);
                 Date temp = datein;
                 datein = dateout;
                 dateout = temp;
-                System.out.println(datein + " " + dateout);
             }
             int HID = 1 + (int) (Math.random() * (25 - 1));
-            ResultSet rs = getResult("SELECT "/*rooms_confirmed,*/ + " Date_In,Date_Out FROM booking_info WHERE (Status=0 OR STATUS = 1) AND Hotel_ID = " + HID);
+            ResultSet rs = getResult("SELECT Date_In,Date_Out FROM booking_info WHERE (Status=0 OR STATUS = 1) AND Hotel_ID = " + HID);
             ResultSet rs2 = getResult("SELECT Number_of_rooms FROM room_info WHERE Hotel_ID = " + HID);
             int n = getDateDifference(dateout, datein);
-            
-            int[] days = new int[n + 1]; //array representing days starting from DateIn to DateOut, both inclusive
+
+            //array representing days 
+            int[] days = new int[n + 1];
             for (int q = 0; q <= n; q++) {
                 days[q] = 0;
             }
@@ -294,60 +219,56 @@ public class UtilTest {
                 rs2.close();
                 int roombooking = 0;
                 int resTest = 0;
-                
                 while (rs.next()) {
 
                     Date checkin = rs.getDate("Date_In");
                     Date checkout = rs.getDate("Date_Out");
-                    System.out.println("check in " + checkin);
-                    System.out.println("check out " + checkout);
 
-                    if ((checkin.after(datein) || checkin.equals(datein)) && (checkout.before(dateout) || checkout.equals(dateout))) {
+                    if ((checkin.before(datein)) && (checkout.after(dateout))) {
+                        //System.out.println("case 1");
+                        for (int q = 0; q <= n; q++) {
+                            days[q] += 1;
+                            //System.out.println("test " + days[q]);
+                        }
+                    } else if ((checkin.after(datein) || checkin.equals(datein)) && (checkout.before(dateout) || checkout.equals(dateout))) {
+                        //System.out.println("case 2");
                         int q, w;
                         q = getDateDifference(checkin, datein);
                         w = n - getDateDifference(dateout, checkout);
                         for (int k = q; k <= w; k++) {
                             days[k]++;
+                            //System.out.println("test " + days[k]);
                         }
-                        //roombooking++;
-                        System.out.println("1");
-                    } else if ((checkout.before(dateout) || checkout.equals(dateout)) && (checkout.after(datein) || checkout.equals(datein)) && (checkin.before(datein) || checkin.equals(datein))) {
-                        int q, w;
-                        q = 0;
-                        w = n - getDateDifference(dateout, checkout);
-                        for (int k = q; k <= w; k++) {
-                            days[k]++;
-                        }
-                        //roombooking++;
-                        System.out.println("2");
-                    } else if ((checkin.after(datein) || checkin.equals(datein)) && (checkin.before(dateout) || checkin.equals(dateout)) && (checkout.after(dateout) || checkin.equals(dateout))) {
+                    } else if (checkin.after(datein) || checkin.equals(datein) && checkin.before(dateout) || checkin.equals(dateout) && checkout.after(dateout) /*|| checkin.equals(datein)*/) {
+                        //System.out.println("case 3");
                         int q, w;
                         w = n;
                         q = getDateDifference(checkin, datein);
                         for (int k = q; k <= w; k++) {
                             days[k]++;
+                            //System.out.println("test " + days[k] + " " + q + " " + w);
                         }
-                        //roombooking++;
-                        System.out.println("3");
-                    } else if ((checkin.before(datein) || checkin.equals(datein)) && (checkout.after(dateout) || checkout.equals(dateout))) {
-                        for (int q = 0; q <= n; q++) {
-                            days[q] += 1;
+                    } else if (checkin.before(datein) && checkout.before(dateout) || checkin.equals(dateout) && checkout.after(datein) || checkout.equals(datein)) {
+                       // System.out.println("case 4");
+                        int q, w;
+                        q = 0;
+                        w = n - getDateDifference(dateout, checkout);
+                        for (int k = q; k <= w; k++) {
+                            days[k]++;
+                           // System.out.println("test " + days[k]);
                         }
-                        //roombooking++;
-                        System.out.println("4");
                     }
 
                 }
                 roombooking = days[0];
                 for (int q = 0; q <= n; q++) {
-                    System.out.print(days[q] + " ");
+                    //System.out.print(days[q] + " ");
                     if (days[q] > roombooking) {
                         roombooking = days[q];
-                        System.out.println("roombooking " + roombooking);
                     }
-                    System.out.println("roombooking " + roombooking);
                     resTest = rooms - roombooking;
                 }
+                //System.out.println("booking " + roombooking);
                 try {
                     rs.close();
 
@@ -355,10 +276,11 @@ public class UtilTest {
                     Logger.getLogger(UtilTest.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 int result = testSubject.checkAvailability(HID, datein, dateout);
-                System.out.println("\nSQL date in " + datein);
-                System.out.println("SQL date out " + dateout);
-                System.out.println("total rooms " + rooms);
-                System.out.println("\noutput of checkAvailability() = " + result + " results from test = " + resTest);
+                System.out.println("\ncheck in date " + datein);
+                System.out.println("chack out date " + dateout);
+                System.out.println("total rooms at hotel ID " +HID+ " = " + rooms);
+                System.out.println("rooms available at hotel ID " +HID+ " = " + resTest);
+                System.out.println("output of checkAvailability() = " + result);
                 assertEquals("output of checkAvailability() = ", resTest, result);
                 i++;
 
@@ -366,6 +288,7 @@ public class UtilTest {
                 Logger.getLogger(UtilTest.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+
         deleteBookings();
     }
 }
