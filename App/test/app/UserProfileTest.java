@@ -69,10 +69,14 @@ public class UserProfileTest {
     
     @Test
     public void CheckBookingsActionPerformedTest (){
-     String username;
-     DefaultTableModel model;
-     UserProfile frame ;
-     model = (DefaultTableModel) Bookings.getModel(); 
      System.out.println(" Testing CheckBookingsActionPerforme()");   
-    }   
+    }
+    
+     @Test
+    public void ModifyActionPerformedTest (){}
+        
+     @Test
+    public void RatingOptionActionPerformedTest (){}   
+        
+        
 }
