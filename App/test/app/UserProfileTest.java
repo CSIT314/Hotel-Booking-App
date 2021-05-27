@@ -64,5 +64,13 @@ public class UserProfileTest {
     public void tearDown() {
        
     }
-  
+     
+     String username;
+     DefaultTableModel model;
+     UserProfile frame ;
+     model = (DefaultTableModel) Bookings.getModel();
+    
+    @Test
+    public void CheckBookingsActionPerformedTest (){}
+    
 }
