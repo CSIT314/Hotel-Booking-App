@@ -77,7 +77,7 @@ public class UserProfileTest {
         
      @Test
     public void RatingOptionActionPerformedTest (){
-    assertNotNull("Can't access Booking_ID for RatingOptionActionPerformedTest "}
+    
     }   
         
         
