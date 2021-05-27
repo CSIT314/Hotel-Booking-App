@@ -35,3 +35,34 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author ARWA
  */
+
+
+/**
+ *
+ * @author ARWA
+ */
+public class UserProfileTest {
+    
+    public UserProfileTest() {
+       
+    }
+
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+    }
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+    }
+
+    @Before
+    public void setUp() {
+         this.testSubject = new UserProfile();
+    }
+    
+    @After
+    public void tearDown() {
+        testSubject = null; 
+    }
+  
+}
