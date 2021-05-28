@@ -54,9 +54,6 @@ public class TestBookingConfirmation {
         }
     }
 
-
-    public static Utilities testSubject;
-
     @Before
     public void setUp() throws Exception {
         this.bookingConfirmation = new BookingConfirmation("TestName", 1, "TestHotel", "TestAddress", "TestCity", 1, new java.sql.Date(System.currentTimeMillis() - 3600 * 24 * 3), new Date(System.currentTimeMillis()));
