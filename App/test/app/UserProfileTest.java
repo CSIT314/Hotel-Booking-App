@@ -53,11 +53,12 @@ public class UserProfileTest {
     @Before
     public void setUp() {
         // this.testSubject = new UserProfile();
+       this.testSubject = new BookingArea();
     }
     
     @After
     public void tearDown() {
-       // testSubject = null; 
+        testSubject = null; 
     }
    
 
@@ -193,10 +194,100 @@ public class UserProfileTest {
     
     }
     
-    @Test
+       @Test
     public void CancelActionPerformedTest (){
+         System.out.println(" Testing CancelActionPerformed()");
 
-    }
+         UserProfile frame ;
+         JButton Cancel; 
+         int num = 10;
+
+         for (int i = 0; i < num; i++) {
+            // generate random username
+            username = generateAlphaNumeric(40);
+
+            frame = new UserProfile(username);
+            //get access to  button
+            Cancel = (JButton) TestUtils.getChildNamed(frame, "Cancel");
+
+            assertNotNull("Cancel Action Performed inaccessible", Cancel);
+            assertNotNull("Frame component inaccessible", frame);
+            
+            // to see if each UI component is accessible
+            System.out.println("Frame, Button found");
+
+            System.out.print("TEST CASE: " + i + "\n");
+            //randomised username 
+            System.out.println("USERNAME: " + username);
+            
+            // integrating random dates into datepicker 
+            Date dateIn = randDate();
+            Date dateOut = randDate();
+            frame.setVisible(true);
+
+            // testing if values of username were correct and implemented correctly in frame variable
+            assertEquals(username, frame.username);
+          
+            try{
+                 // Change Status to Cancelled    
+                 model = (DefaultTableModel) Bookings.getModel();
+                int rowIndex = Bookings.getSelectedRow();
+                int bookid= (int) model.getValueAt(rowIndex, 0);
+                int hid=(int) model.getValueAt(rowIndex,6);
+                java.sql.Date datein=(java.sql.Date) model.getValueAt(rowIndex,3);
+                java.sql.Date dateout=(java.sql.Date) model.getValueAt(rowIndex,4);
+               
+                 InsertRow("UPDATE booking_info SET Status=2 WHERE Booking_ID=\""+bookid+"\";");
+                ResultSet rs = getResult("SELECT CURDATE()");
+                rs.next();
+                Date today = rs.getDate("CURDATE()");
+                int setFlag = 0;
+                if(getDateDifference(datein, today) < 3){
+                     setFlag = 1; }
+                String query = "SELECT * FROM booking_info where Status=1 AND Hotel_ID = " + hid +  " ORDER BY Booking_ID ASC";
+                ResultSet rs2=getResult(query);
+        
+        while(rs2.next()){
+            int bid = rs2.getInt("Booking_ID");
+            int wlrooms=rs2.getInt("rooms_waitlist");
+            int cnfrooms = rs2.getInt("rooms_confirmed");
+            Date date_in = rs2.getDate("Date_In");
+            Date date_out = rs2.getDate("Date_Out");
+            try{
+            rs = getResult("SELECT CURDATE();");
+            rs.next();            
+            today = rs.getDate("CURDATE()");
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+            int rooms_available = (int) (checkAvailability(hid, date_in, date_out));
+            if(rooms_available > 0){
+                if(rooms_available > wlrooms){
+                    cnfrooms += wlrooms;
+                    wlrooms = 0;
+                }
+                if(rooms_available == wlrooms){
+                    wlrooms = 0;
+                    cnfrooms += rooms_available;
+                }
+                else{
+                    wlrooms -= rooms_available;
+                    cnfrooms += rooms_available;
+                }
+                InsertRow("UPDATE booking_info SET rooms_confirmed = " + cnfrooms + " WHERE Booking_ID= "+bid+";");
+                InsertRow("UPDATE booking_info SET rooms_waitlist = " + wlrooms + " WHERE Booking_ID= "+bid+";");
+            }        
+            if(setFlag == 1){
+                  JOptionPane.showMessageDialog(null, "Cancellation fee of 50% has been levied as you're booking within 3 days.", "WARNING!", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+        }catch(Exception e)
+        {
+            System.out.println(e);
+        }
+       System.out.println("Cancel Action Performed Test Successful");
+     }
+} 
    
     
     @Test
