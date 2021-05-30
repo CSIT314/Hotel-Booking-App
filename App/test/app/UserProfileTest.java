@@ -98,7 +98,7 @@ public class UserProfileTest {
     
     @Test
    public void CheckBookingsActionPerformedTest (){
-
+         Bookings.setName("Bookings");
          System.out.println(" Testing CheckBookingsActionPerforme()");
          UserProfile frame;
          JButton CheckBookings; 
@@ -108,8 +108,8 @@ public class UserProfileTest {
             username = generateAlphaNumeric(40);
             frame = new UserProfile(username);
             //get access to  button
-            //CheckBookings = (JButton) TestUtils.getChildNamed(frame, "CheckBookings");
-            Bookings.setName("Bookings");
+            CheckBookings = (JButton) TestUtils.getChildNamed(frame, "CheckBookings");
+            
             Bookings = (JTable)TestUtils.getChildNamed(frame, "Bookings");
 
             //assertNotNull("CheckBookings inaccessible", CheckBookings);
