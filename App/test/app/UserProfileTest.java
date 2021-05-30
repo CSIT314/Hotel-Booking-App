@@ -92,6 +92,12 @@ public class UserProfileTest {
         String rdate = formater.format(gc.getTime());
         java.sql.Date randdate = new java.sql.Date(gc.getTimeInMillis());
         return randdate;  }
+
+       private void setComponentsNames() {
+            Bookings = new javax.swing.JTable();
+            Bookings.setName("Bookings");
+
+          }
      
     
     @Test
@@ -107,6 +113,7 @@ public class UserProfileTest {
             frame = new UserProfile(username);
             //get access to  button
             //CheckBookings = (JButton) TestUtils.getChildNamed(frame, "CheckBookings");
+            setComponentsNames(); 
             Bookings = (JTable)TestUtils.getChildNamed(frame, "Bookings");
 
             //assertNotNull("CheckBookings inaccessible", CheckBookings);
@@ -171,9 +178,8 @@ public class UserProfileTest {
                   model.addRow(row);
                  //Bookings.setRowSelectionAllowed(true);
             }
-        } catch(Exception e){
-            System.out.println(e);
-            }
+        }catch (SQLException ex) {
+            ex.printStackTrace();  }
         
          System.out.println("CheckBookingsActionPerformedTest Booking_ID successful");
          System.out.println("CheckBookingsActionPerformedTest addRow successful");
