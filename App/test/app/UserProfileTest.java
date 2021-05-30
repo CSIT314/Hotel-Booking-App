@@ -93,7 +93,22 @@ public class UserProfileTest {
         java.sql.Date randdate = new java.sql.Date(gc.getTimeInMillis());
         return randdate;  }
 
-   
+    private String[] gethotelList(){
+
+        ResultSet RSet = getResult("SELECT DISTINCT Hotel_ID FROM booking_info");
+        ArrayList<String> hotels = new ArrayList<>(); 
+        try {
+            while(RSet.next()){
+                hotels.add(RSet.getString("City"));
+            }
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        String[] hotel_names = hotels.toArray(new String[0]);  
+        //for(int i=0;i<city_names.length;i++)
+            //System.out.println(city_names[i]);
+        return hotel_names;
+    }
      
     
     @Test
@@ -109,7 +124,6 @@ public class UserProfileTest {
             frame = new UserProfile(username);
             //get access to  button
             CheckBookings = (JButton) TestUtils.getChildNamed(frame, "CheckBookings");
-            
             Bookings = (JTable)TestUtils.getChildNamed(frame, "Bookings");
 
             assertNotNull("CheckBookings inaccessible", CheckBookings);
@@ -210,21 +224,24 @@ public class UserProfileTest {
             System.out.println("USERNAME: " + username);
             
             // integrating random dates into datepicker 
-            Date dateIn = randDate();
-            Date dateOut = randDate();
+            Date datein = randDate();
+            Date dateout = randDate();
             frame.setVisible(true);
             // testing if values of username were correct and implemented correctly in frame variable
             assertEquals(username, frame.username);
           
             try{
-                 // Change Status to Cancelled    
-                 model = (DefaultTableModel) Bookings.getModel();
+                // Change Status to Cancelled    
+                model = (DefaultTableModel) Bookings.getModel();
+                model.setRowCount(0);
                 int rowIndex = Bookings.getSelectedRow();
                 int bookid= (int) model.getValueAt(rowIndex, 0);
-                int hid=(int) model.getValueAt(rowIndex,6);
-                java.sql.Date datein=(java.sql.Date) model.getValueAt(rowIndex,3);
-                java.sql.Date dateout=(java.sql.Date) model.getValueAt(rowIndex,4);
-               
+                //int hid=(int) model.getValueAt(rowIndex,6);
+                //java.sql.Date datein = (java.sql.Date) model.getValueAt(rowIndex,3);
+                //java.sql.Date dateout = (java.sql.Date) model.getValueAt(rowIndex,4);
+                
+                 String hid[] = gethotelList();
+                
                  InsertRow("UPDATE booking_info SET Status=2 WHERE Booking_ID=\""+bookid+"\";");
                  ResultSet rs = getResult("SELECT CURDATE()");
                  rs.next();
@@ -233,7 +250,7 @@ public class UserProfileTest {
                  if(getDateDifference(datein, today) < 3){
                      setFlag = 1;  }
                 String query = "SELECT * FROM booking_info where Status=1 AND Hotel_ID = " + hid +  " ORDER BY Booking_ID ASC";
-                ResultSet rs2=getResult(query);
+                ResultSet rs2 = getResult(query);
                 
                 while(rs2.next()){
                     int bid = rs2.getInt("Booking_ID");
