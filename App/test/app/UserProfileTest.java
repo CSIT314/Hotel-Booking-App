@@ -25,7 +25,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+//import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Random;
 import java.util.Scanner;
@@ -42,7 +42,7 @@ public class UserProfileTest {
    
  // class variables
     String username;
-    int bid;
+
 
 
     public UserProfileTest() {  }
@@ -50,11 +50,13 @@ public class UserProfileTest {
 
     @Before
     public void setUp() {
-        this.testSubject = new UserProfile();  }
+       // this.testSubject = new UserProfile();  
+       }
     
     @After
     public void tearDown() { 
-        testSubject = null;  }
+      //  testSubject = null; 
+     }
    
 
     // random string generation for username
@@ -260,5 +262,117 @@ public class UserProfileTest {
      }
 } 
 
+    
+    @Test
+    public void ModifyActionPerformedTest (){
+         System.out.println(" Testing ModifyActionPerformed()");
+         UserProfile frame ;
+         JButton Modify; 
+         int num = 10;
+         for (int i = 0; i < num; i++) {
+            // generate random username
+            username = generateAlphaNumeric(40);
+            frame = new UserProfile(username);
+            //get access to  button
+            Modify = (JButton) TestUtils.getChildNamed(frame, "Modify");
+            assertNotNull("Modify Bookings inaccessible", Modify);
+            assertNotNull("Frame component inaccessible", frame);
+            
+            // to see if each UI component is accessible
+            System.out.println("Frame, Button found");
 
+            System.out.print("TEST CASE: " + i + "\n");
+            //randomised username 
+            System.out.println("USERNAME: " + username);
+            
+            // integrating random dates into datepicker 
+            Date dateIn = randDate();
+            Date dateOut = randDate();
+            frame.setVisible(true);
+
+            // testing if values of username were correct and implemented correctly in frame variable
+            assertEquals(username, frame.username);
+            
+            // testing the code of button functionality
+            try {
+                int rowIndex = Bookings.getSelectedRow();
+                model = (DefaultTableModel) Bookings.getModel();
+                int bookingID = (int) model.getValueAt(rowIndex, 0);
+                java.sql.Date datein = (java.sql.Date) model.getValueAt(rowIndex,3);
+                java.sql.Date dateout= (java.sql.Date) model.getValueAt(rowIndex,4);
+                ResultSet rs = getResult("SELECT CURDATE()");
+                rs.next();
+                Date today = rs.getDate("CURDATE()");
+                if(getDateDifference(datein, today) < 3){
+                     JOptionPane.showMessageDialog(null, "You cannot modify now.", "WARNING!", JOptionPane.WARNING_MESSAGE);
+                     return;
+                }         
+                new ModifyBooking(username, bookingID).setVisible(true);
+                this.dispose();
+            } 
+            catch (SQLException ex) {
+            Logger.getLogger(UserProfile.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            System.out.println("Modify Action Performed Test Successful");
+        }
+         
+         
+    }
+    
+    @Test
+    public void RatingOptionActionPerformedTest (){
+         System.out.println(" Testing RatingOptionActionPerformed()");    
+         
+         UserProfile frame ;
+         JButton RatingOption; 
+         int num = 10;
+         for (int i = 0; i < num; i++) {
+            // generate random username
+            username = generateAlphaNumeric(40);
+            frame = new UserProfile(username);
+            //get access to  button
+            RatingOption = (JButton) TestUtils.getChildNamed(frame, "RatingOption");
+            assertNotNull("Rating Option inaccessible", RatingOption);
+            assertNotNull("Frame component inaccessible", frame);
+            
+            // to see if each UI component is accessible
+            System.out.println("Frame, Button found");
+
+            System.out.print("TEST CASE: " + i + "\n");
+            //randomised username 
+            System.out.println("USERNAME: " + username);
+            
+            // integrating random dates into datepicker 
+            Date dateIn = randDate();
+            Date dateOut = randDate();
+            frame.setVisible(true);
+
+            // testing if values of username were correct and implemented correctly in frame variable
+            assertEquals(username, frame.username);
+            
+            // testing the code of button functionality
+            try {
+                 // TODO add your handling code here:
+                int rowIndex = Bookings.getSelectedRow();
+                model = (DefaultTableModel) Bookings.getModel();
+                int bookingID = (int) model.getValueAt(rowIndex, 0);
+                int rating = Integer.parseInt(Rating.getText());
+                ResultSet rs = getResult("SELECT Hotel_ID from booking_info WHERE Booking_ID = " + bookingID + ";");            
+                rs.next();
+                int hid = rs.getInt("Hotel_ID");
+                String query = "SELECT MAX(review_id) FROM hotel_reviews;";
+                rs = getResult(query);
+                rs.next();
+                int cid = (int) rs.getInt("MAX(review_id)") + 1;
+                query = "INSERT INTO hotel_reviews VALUES(" + cid + ", \"" + username + "\", " + hid + ", " + rating +");"; 
+                InsertRow(query);
+                
+            }   
+            catch (SQLException ex) {
+            Logger.getLogger(UserProfile.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println("Rating Option Action Performed Test Successful");
+        }   
+    }
 }
