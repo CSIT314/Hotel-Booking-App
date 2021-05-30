@@ -13,6 +13,7 @@ import static app.Utilities.*;
 import static app.DBConnection.getResult;
 import java.awt.Dimension;
 import javax.swing.*;
+import javax.swing.JButton;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -25,7 +26,6 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-//import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Random;
 import java.util.Scanner;
@@ -42,7 +42,7 @@ public class UserProfileTest {
    
  // class variables
     String username;
-
+    int bid;
 
 
     public UserProfileTest() {  }
@@ -111,8 +111,8 @@ public class UserProfileTest {
             System.out.println("USERNAME: " + username);
             
             // integrating random dates into datepicker 
-            Date dateIn = randDate();
-            Date dateOut = randDate();
+            java.sql.Date dateIn = randDate();
+            java.sql.Date dateOut = randDate();
             frame.setVisible(true);
 
             // testing if values of username were correct and implemented correctly in frame variable
