@@ -12,17 +12,17 @@ import org.junit.Assert;
 import static app.DBConnection.InsertRow;
 import static app.Utilities.*;
 import static app.DBConnection.getResult;
-//import java.awt.Dimension;
+import java.awt.Dimension;
 import javax.swing.*;
 import javax.swing.JButton;
 import javax.swing.JTable;
-//import java.sql.Connection;
-//import java.sql.DriverManager;
-//import java.sql.PreparedStatement;
-//import java.sql.ResultSet;
-//import java.sql.ResultSetMetaData;
-//import java.sql.SQLException;
-//import java.sql.Statement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.*;
@@ -171,8 +171,9 @@ public class UserProfileTest {
                   model.addRow(row);
                  //Bookings.setRowSelectionAllowed(true);
             }
-        }catch (SQLException ex) {
-            ex.printStackTrace();  }
+        } catch(Exception e){
+            System.out.println(e);
+            }
         
          System.out.println("CheckBookingsActionPerformedTest Booking_ID successful");
          System.out.println("CheckBookingsActionPerformedTest addRow successful");
