@@ -42,7 +42,7 @@ public class UserProfileTest {
    
  // class variables
     String username;
-    int bid;
+    DefaultTableModel model;
 
 
     public UserProfileTest() {  }
@@ -122,11 +122,11 @@ public class UserProfileTest {
             try {
                 java.sql.Date inDate, outDate;
                 try {
-                    inDate = dateIn.getDate();
-                    outDate = dateOut.getDate();
+                    //inDate = dateIn.getDate();
+                    //outDate = dateOut.getDate();
                     // testing if new checkIn and checkOut date are not null 
-                    assertNotNull("No Booking Date checkIn", inDate);
-                    assertNotNull("No booking Date checkOut", outDate);
+                    assertNotNull("No Booking Date checkIn", dateIn);
+                    assertNotNull("No booking Date checkOut", dateOut);
                     System.out.print("DATE IN: " + dateIn.getDate() + "\n");
                     System.out.print("DATE OUT: " + dateOut.getDate() + "\n");
                     
@@ -251,7 +251,8 @@ public class UserProfileTest {
                         InsertRow("UPDATE booking_info SET rooms_waitlist = " + wlrooms + " WHERE Booking_ID= "+bid+";");
                     }        
                     if(setFlag == 1){
-                        JOptionPane.showMessageDialog(null, "Cancellation fee of 50% has been levied as you're booking within 3 days.", "WARNING!", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Cancellation fee of 50% has been levied as you're booking within 3 days.", 
+                           "WARNING!", JOptionPane.WARNING_MESSAGE);
                     }
                 }
             }
@@ -315,9 +316,7 @@ public class UserProfileTest {
             }
             
             System.out.println("Modify Action Performed Test Successful");
-        }
-         
-         
+        }        
     }
     
     @Test
