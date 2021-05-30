@@ -224,8 +224,8 @@ public class UserProfileTest {
             System.out.println("USERNAME: " + username);
             
             // integrating random dates into datepicker 
-            Date datein = randDate();
-            Date dateout = randDate();
+            java.sql.Date dateIn = randDate();
+            java.sql.Date dateOut = randDate();
             frame.setVisible(true);
             // testing if values of username were correct and implemented correctly in frame variable
             assertEquals(username, frame.username);
