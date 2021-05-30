@@ -2,8 +2,6 @@
 package app;
 import app.UserProfile;
 import javax.swing.table.DefaultTableModel;
-
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -14,16 +12,17 @@ import org.junit.Assert;
 import static app.DBConnection.InsertRow;
 import static app.Utilities.*;
 import static app.DBConnection.getResult;
-import java.awt.Dimension;
+//import java.awt.Dimension;
 import javax.swing.*;
 import javax.swing.JButton;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
+import javax.swing.JTable;
+//import java.sql.Connection;
+//import java.sql.DriverManager;
+//import java.sql.PreparedStatement;
+//import java.sql.ResultSet;
+//import java.sql.ResultSetMetaData;
+//import java.sql.SQLException;
+//import java.sql.Statement;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.*;
@@ -39,7 +38,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.lang.reflect.InvocationTargetException;
-import javax.swing.JTable;
+
 
 /**
  *
@@ -387,8 +386,8 @@ public class UserProfileTest {
                 InsertRow(query);
                 
             }   
-            catch (SQLException ex) {
-            Logger.getLogger(UserProfile.class.getName()).log(Level.SEVERE, null, ex);
+            catch(Exception e){
+            System.out.println(e);
             }
             System.out.println("Rating Option Action Performed Test Successful");
         }   
