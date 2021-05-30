@@ -94,7 +94,6 @@ public class UserProfileTest {
         return randdate;  }
 
        private void setComponentsNames() {
-            Bookings = new javax.swing.JTable();
             Bookings.setName("Bookings");
 
           }
