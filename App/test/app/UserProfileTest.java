@@ -65,7 +65,10 @@ public class UserProfileTest {
       //  testSubject = null; 
      }
    
-
+     private void setComponentsNames() {
+        Bookings.setName("Bookings");
+    }
+   
     // random string generation for username
     private String generateAlphaNumeric(int topMargin) {
         int leftLimit = 48 ; // numeral '0'
@@ -98,7 +101,7 @@ public class UserProfileTest {
     
     @Test
    public void CheckBookingsActionPerformedTest (){
-         Bookings.setName("Bookings");
+         setComponentsNames();
          System.out.println(" Testing CheckBookingsActionPerforme()");
          UserProfile frame;
          JButton CheckBookings; 
