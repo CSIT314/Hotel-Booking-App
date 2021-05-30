@@ -49,7 +49,24 @@ public class UserProfile extends javax.swing.JFrame {
     public UserProfile(String username) {
         this.username = username;
         initComponents();
+        setComponentsNames();
     }
+    
+    
+  private void setComponentsNames() {
+        BookingAreaGo.setName("BookingAreaGo");
+        Bookings.setName("Bookings");
+        Cancel.setName("Cancel");
+        CheckBookings.setName("CheckBookings");
+        Modify.setName("Modify");
+        Rating.setName("Rating");
+        RatingOption.setName("RatingOption");
+        Username.setName("Username");
+        jScrollPane1.setName("jScrollPane1");
+        welcome.setName("welcome");
+    } 
+    
+    
     DefaultTableModel model;
    
  
