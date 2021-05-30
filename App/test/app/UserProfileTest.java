@@ -348,6 +348,7 @@ public class UserProfileTest {
             //get access to  button
             RatingOption = (JButton) TestUtils.getChildNamed(frame, "RatingOption");
             Bookings = (JTable)TestUtils.getChildNamed(frame, "Bookings");
+            Rating = (JTextField) TestUtils.getChildNamed(frame, "Rating");
 
             assertNotNull("Rating Option inaccessible", RatingOption);
             assertNotNull("Frame component inaccessible", frame);
