@@ -50,7 +50,7 @@ public class UserProfileTest {
  // class variables
     String username;
     DefaultTableModel model;
-    JTable Bookings ;
+    JTable Bookings;
 
     public UserProfileTest() {  }
 
@@ -65,9 +65,6 @@ public class UserProfileTest {
       //  testSubject = null; 
      }
    
-     private void setComponentsNames() {
-        Bookings.setName("Bookings");
-    }
    
     // random string generation for username
     private String generateAlphaNumeric(int topMargin) {
@@ -101,7 +98,7 @@ public class UserProfileTest {
     
     @Test
    public void CheckBookingsActionPerformedTest (){
-         setComponentsNames();
+
          System.out.println(" Testing CheckBookingsActionPerforme()");
          UserProfile frame;
          JButton CheckBookings; 
@@ -339,6 +336,8 @@ public class UserProfileTest {
         }        
     }
     
+  
+
     @Test
     public void RatingOptionActionPerformedTest (){
          System.out.println(" Testing RatingOptionActionPerformed()");    
