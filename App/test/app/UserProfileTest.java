@@ -2,12 +2,13 @@
 package app;
 import app.UserProfile;
 import javax.swing.table.DefaultTableModel;
-import org.junit.Test;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Assert;
 import static app.DBConnection.InsertRow;
 import static app.Utilities.*;
 import static app.DBConnection.getResult;
@@ -23,16 +24,19 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import java.lang.reflect.InvocationTargetException;
 /**
  *
  * @author ARWA
@@ -217,7 +221,7 @@ public class UserProfileTest {
                  int setFlag = 0;
                  if(getDateDifference(datein, today) < 3){
                      setFlag = 1;  }
-                query = "SELECT * FROM booking_info where Status=1 AND Hotel_ID = " + hid +  " ORDER BY Booking_ID ASC";
+                String query = "SELECT * FROM booking_info where Status=1 AND Hotel_ID = " + hid +  " ORDER BY Booking_ID ASC";
                 ResultSet rs2=getResult(query);
                 
                 while(rs2.next()){
@@ -309,7 +313,7 @@ public class UserProfileTest {
                      return;
                 }         
                 new ModifyBooking(username, bookingID).setVisible(true);
-                this.dispose();
+                // this.dispose();
             } 
             catch (SQLException ex) {
             Logger.getLogger(UserProfile.class.getName()).log(Level.SEVERE, null, ex);
