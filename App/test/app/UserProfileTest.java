@@ -112,7 +112,7 @@ public class UserProfileTest {
 
             //assertNotNull("CheckBookings inaccessible", CheckBookings);
             assertNotNull("Frame component inaccessible", frame);
-            assertNotNull("Bookings JTable component inaccessible", Bookings);
+            // assertNotNull("Bookings JTable component inaccessible", Bookings);
            
             // to see if each UI component is accessible
             System.out.println("Frame,Bookings and CheckBookings Button found");
@@ -327,7 +327,7 @@ public class UserProfileTest {
                 // this.dispose();
             } 
             catch (SQLException ex) {
-            Logger.getLogger(UserProfile.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(e);
             }
             
             System.out.println("Modify Action Performed Test Successful");
@@ -371,8 +371,9 @@ public class UserProfileTest {
             // testing the code of button functionality
             try {
                  // TODO add your handling code here:
-                int rowIndex = Bookings.getSelectedRow();
+                 //int rowIndex = Bookings.getSelectedRow();
                 model = (DefaultTableModel) Bookings.getModel();
+                
                 int bookingID = (int) model.getValueAt(rowIndex, 0);
                 int rating = Integer.parseInt(Rating.getText());
                 ResultSet rs = getResult("SELECT Hotel_ID from booking_info WHERE Booking_ID = " + bookingID + ";");            
