@@ -326,7 +326,7 @@ public class UserProfileTest {
                 new ModifyBooking(username, bookingID).setVisible(true);
                 // this.dispose();
             } 
-            catch (SQLException ex) {
+            catch(Exception e){
             System.out.println(e);
             }
             
@@ -371,7 +371,7 @@ public class UserProfileTest {
             // testing the code of button functionality
             try {
                  // TODO add your handling code here:
-                 //int rowIndex = Bookings.getSelectedRow();
+                int rowIndex = Bookings.getSelectedRow();
                 model = (DefaultTableModel) Bookings.getModel();
                 
                 int bookingID = (int) model.getValueAt(rowIndex, 0);
