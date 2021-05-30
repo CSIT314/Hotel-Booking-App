@@ -236,11 +236,11 @@ public class UserProfileTest {
                 model.setRowCount(0);
                 int rowIndex = Bookings.getSelectedRow();
                 int bookid= (int) model.getValueAt(rowIndex, 0);
-                //int hid=(int) model.getValueAt(rowIndex,6);
-                //java.sql.Date datein = (java.sql.Date) model.getValueAt(rowIndex,3);
-                //java.sql.Date dateout = (java.sql.Date) model.getValueAt(rowIndex,4);
+                int hid=(int) model.getValueAt(rowIndex,6);
+                java.sql.Date datein = (java.sql.Date) model.getValueAt(rowIndex,3);
+                java.sql.Date dateout = (java.sql.Date) model.getValueAt(rowIndex,4);
                 
-                 String hid[] = gethotelList();
+                 //String hid[] = gethotelList();
                 
                  InsertRow("UPDATE booking_info SET Status=2 WHERE Booking_ID=\""+bookid+"\";");
                  ResultSet rs = getResult("SELECT CURDATE()");
