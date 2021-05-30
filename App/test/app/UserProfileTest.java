@@ -2,6 +2,8 @@
 package app;
 import app.UserProfile;
 import javax.swing.table.DefaultTableModel;
+
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -37,6 +39,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.lang.reflect.InvocationTargetException;
+import javax.swing.JTable;
+
 /**
  *
  * @author ARWA
@@ -47,7 +51,7 @@ public class UserProfileTest {
  // class variables
     String username;
     DefaultTableModel model;
-
+    JTable Bookings ;
 
     public UserProfileTest() {  }
 
@@ -104,11 +108,14 @@ public class UserProfileTest {
             frame = new UserProfile(username);
             //get access to  button
             CheckBookings = (JButton) TestUtils.getChildNamed(frame, "CheckBookings");
+            Bookings = (JTable)TestUtils.getChildNamed(frame, "Bookings");
+
             assertNotNull("CheckBookings inaccessible", CheckBookings);
             assertNotNull("Frame component inaccessible", frame);
-            
+            assertNotNull("Bookings JTable component inaccessible", Bookings);
+           
             // to see if each UI component is accessible
-            System.out.println("Frame, Button found");
+            System.out.println("Frame,Bookings and CheckBookings Button found");
 
             System.out.print("TEST CASE: " + i + "\n");
             //randomised username 
@@ -189,6 +196,8 @@ public class UserProfileTest {
             frame = new UserProfile(username);
             //get access to  button
             Cancel = (JButton) TestUtils.getChildNamed(frame, "Cancel");
+            Bookings = (JTable)TestUtils.getChildNamed(frame, "Bookings");
+
             assertNotNull("Cancel Action Performed inaccessible", Cancel);
             assertNotNull("Frame component inaccessible", frame);
             
@@ -280,6 +289,8 @@ public class UserProfileTest {
             frame = new UserProfile(username);
             //get access to  button
             Modify = (JButton) TestUtils.getChildNamed(frame, "Modify");
+            Bookings = (JTable)TestUtils.getChildNamed(frame, "Bookings");
+
             assertNotNull("Modify Bookings inaccessible", Modify);
             assertNotNull("Frame component inaccessible", frame);
             
@@ -336,6 +347,8 @@ public class UserProfileTest {
             frame = new UserProfile(username);
             //get access to  button
             RatingOption = (JButton) TestUtils.getChildNamed(frame, "RatingOption");
+            Bookings = (JTable)TestUtils.getChildNamed(frame, "Bookings");
+
             assertNotNull("Rating Option inaccessible", RatingOption);
             assertNotNull("Frame component inaccessible", frame);
             
