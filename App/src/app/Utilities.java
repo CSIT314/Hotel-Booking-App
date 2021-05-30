@@ -39,6 +39,7 @@ public class Utilities {
             rs = getResult("SELECT " + query+";");
             rs.next();
             n = rs.getInt(query);
+            rs.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -82,9 +83,11 @@ public class Utilities {
                 for(int k=i;k<=j;k++){
                     days[k]++;
                 }
+                /*
                 for(int k=i;k<=j;k++){
                     days[k]++;
-                }
+                    System.out.println(days[k]);
+                }*/
             }
             //CASE 3
             rs = getResult(query + " AND Date_In >= \"" + DateIn + "\" AND Date_In <= \"" + DateOut + "\" AND Date_Out > \"" + DateOut + "\";");
@@ -118,11 +121,17 @@ public class Utilities {
             if(days[i] > rooms)
                 rooms = days[i];
         }
+        
         rs = getResult("SELECT Number_of_rooms FROM room_info WHERE Hotel_ID = " + HID +";");
         int return_val = 0;
         try {
             rs.next();
             return_val = (int) rs.getInt("Number_of_rooms") - rooms;
+        } catch (SQLException ex) {
+            Logger.getLogger(Utilities.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(Utilities.class.getName()).log(Level.SEVERE, null, ex);
         }
