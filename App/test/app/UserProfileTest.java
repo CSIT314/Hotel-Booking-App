@@ -93,10 +93,7 @@ public class UserProfileTest {
         java.sql.Date randdate = new java.sql.Date(gc.getTimeInMillis());
         return randdate;  }
 
-       private void setComponentsNames() {
-            Bookings.setName("Bookings");
-
-          }
+   
      
     
     @Test
@@ -112,7 +109,7 @@ public class UserProfileTest {
             frame = new UserProfile(username);
             //get access to  button
             //CheckBookings = (JButton) TestUtils.getChildNamed(frame, "CheckBookings");
-            setComponentsNames(); 
+            Bookings.setName("Bookings");
             Bookings = (JTable)TestUtils.getChildNamed(frame, "Bookings");
 
             //assertNotNull("CheckBookings inaccessible", CheckBookings);
