@@ -1,7 +1,7 @@
 
 package app;
 import app.UserProfile;
-
+import javax.swing.table.DefaultTableModel;
 import org.junit.Test;
 import org.junit.After;
 import org.junit.AfterClass;
