@@ -47,7 +47,7 @@ public class TestBookingConfirmation {
         int number_of_rooms = bookingConfirmation.number_of_rooms;
         for (int i = 0; i < 5; i++) {
             BookingConfirmation bookingConfirmation = new BookingConfirmation(name, 1, hotel, address, city, 1, new java.sql.Date(System.currentTimeMillis() - 3600 ), new Date(System.currentTimeMillis()));
-            assertEquals(bookingConfirmation.number_of_rooms, number_of_rooms - i );
+            assertEquals(bookingConfirmation.number_of_rooms, number_of_rooms);
             assertEquals(bookingConfirmation.rooms_to_book, 1);
             bookingConfirmation = null;
         }
