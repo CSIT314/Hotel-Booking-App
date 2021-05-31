@@ -33,7 +33,7 @@ public class TestBookingConfirmation {
         assertEquals(bookingConfirmation.Address, "TestAddress");
         assertEquals(bookingConfirmation.City, "TestCity");
         assertEquals(bookingConfirmation.tariff, 1);
-        assertEquals(bookingConfirmation.days, 3);
+        assertEquals(bookingConfirmation.days, 1);
     }
 
     @Test
@@ -46,7 +46,7 @@ public class TestBookingConfirmation {
         int rooms_to_book = bookingConfirmation.rooms_to_book;
         int number_of_rooms = bookingConfirmation.number_of_rooms;
         for (int i = 0; i < 5; i++) {
-            BookingConfirmation bookingConfirmation = new BookingConfirmation(name, 1, hotel, address, city, 1, new java.sql.Date(System.currentTimeMillis() - 3600 * 24), new Date(System.currentTimeMillis()));
+            BookingConfirmation bookingConfirmation = new BookingConfirmation(name, 1, hotel, address, city, 1, new java.sql.Date(System.currentTimeMillis() - 3600 ), new Date(System.currentTimeMillis()));
             assertEquals(bookingConfirmation.number_of_rooms, number_of_rooms - i );
             assertEquals(bookingConfirmation.rooms_to_book, 1);
             bookingConfirmation = null;
