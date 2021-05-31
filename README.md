@@ -1,7 +1,19 @@
-# Hotel-Booking-App
+# UOW CSIT314 
+## Test Driven Development Group Project 2
+## Group Member
+- 7009884 Ivan Ezechial Suratno
+- 6195295 Kyle Murphy 
+- 6685663 Liam Turnbull 
+- 5140511 Peter Nguyen 
+- 6113783 Di Zhu 
+- 6620760 Arwa Alraddadi 
+- 6659676 Chendi Xi*
+
+# About the App
+## Hotel-Booking-App
 A Java (Swing) based project to build a hotel booking app. The app lets users create accounts, book hotel tooms in various cities across India and cancel/modify their bookings. Built using Java (Swing) + a mySQL Database towards partial credit towards CS F213, the Object Oriented Programming Course. Made by me, @vamsin and @shantanu23gupta. Was mostly a last minute job.
 
-# Possible Improvements/Fixes
+## Possible Improvements/Fixes
 
 These are thing that could be done to improve the app:
 
@@ -11,7 +23,5 @@ These are thing that could be done to improve the app:
 - Implement a better reviews system that does not recalculate every single time. 
 - User Account page: Add exception handling to prevent errors from happening when users try to click cancel/modify functions without selecting an option.
 
-# This is based on
+## This is based on
 https://github.com/rohitdwivedula/Hotel-Booking-App
-
-# UOW TDD Project
