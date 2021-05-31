@@ -235,8 +235,8 @@ public class UserProfileTest {
                 model = (DefaultTableModel) Bookings.getModel();
                 model.setRowCount(0);
                 int rowIndex = Bookings.getSelectedRow();
-                //int rowIndex = Bookings.setRowSelectionInterval(0, 0);
-                int bookid= (int) model.getValueAt(rowIndex, 0);
+                Bookings.setRowSelectionInterval(0, 0);
+                int bookid= (int) model.getValueAt(Bookings, 0);
                 int hid=(int) model.getValueAt(rowIndex,6);
                 java.sql.Date datein = (java.sql.Date) model.getValueAt(rowIndex,3);
                 java.sql.Date dateout = (java.sql.Date) model.getValueAt(rowIndex,4);
@@ -290,7 +290,7 @@ public class UserProfileTest {
                 }
             }
             catch(Exception e){
-            System.out.println("");
+            System.out.println(e);
             }
        System.out.println("Cancel Action Performed Test Successful");
      }
@@ -348,7 +348,7 @@ public class UserProfileTest {
                 // this.dispose();
             } 
             catch(Exception e){
-            System.out.println("");
+            System.out.println(e);
             }
             
             System.out.println("Modify Action Performed Test Successful");
@@ -413,7 +413,7 @@ public class UserProfileTest {
                 
             }   
             catch(Exception e){
-            System.out.println("");
+            System.out.println(e);
             }
             System.out.println("Rating Option Action Performed Test Successful");
         }   
