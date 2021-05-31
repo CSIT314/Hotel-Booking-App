@@ -236,8 +236,9 @@ public class UserProfileTest {
                 model.setRowCount(0);
                 Bookings.setRowSelectionInterval(0, 0);
                 int rowIndex = Bookings.getSelectedRow();
-                
+                System.out.println("rowIndex",rowIndex);
                 int bookid= (int) model.getValueAt(rowIndex, 0);
+                System.out.println("bookid"+ bookid);
                 int hid=(int) model.getValueAt(rowIndex,6);
                 java.sql.Date datein = (java.sql.Date) model.getValueAt(rowIndex,3);
                 java.sql.Date dateout = (java.sql.Date) model.getValueAt(rowIndex,4);
