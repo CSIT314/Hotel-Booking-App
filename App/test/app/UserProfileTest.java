@@ -218,7 +218,7 @@ public class UserProfileTest {
                 model = (DefaultTableModel) Bookings.getModel();
                 model.setRowCount(0);
                 //Bookings.setRowSelectionInterval(0, 0);
-                int rowIndex = Bookings.getSelectedRow()
+                int rowIndex = Bookings.getSelectedRow();
                 if (rowIndex <= -1) { rowIndex = 0 ; }
                 int bookid= (int) model.getValueAt(rowIndex, 0);
                 System.out.println("bookid"+ bookid);
