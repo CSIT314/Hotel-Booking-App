@@ -217,17 +217,14 @@ public class UserProfileTest {
                 // Change Status to Cancelled    
                 model = (DefaultTableModel) Bookings.getModel();
                 model.setRowCount(0);
-                //Bookings.setRowSelectionInterval(0, 0);
-                int rowIndex = Bookings.getSelectedRow();
-                if (rowIndex <= -1) { rowIndex = i ; }
+                Bookings.setRowSelectionInterval(0, 0);
+                int rowIndex = Bookings.getSelectedRow(); 
                 int bookid= (int) model.getValueAt(rowIndex, 0);
                 System.out.println("bookid"+ bookid);
                 int hid=(int) model.getValueAt(rowIndex,6);
                 java.sql.Date datein = (java.sql.Date) model.getValueAt(rowIndex,3);
                 java.sql.Date dateout = (java.sql.Date) model.getValueAt(rowIndex,4);
-                
-                 //String hid[] = gethotelList();
-                
+                               
                  InsertRow("UPDATE booking_info SET Status=2 WHERE Booking_ID=\""+bookid+"\";");
                  ResultSet rs = getResult("SELECT CURDATE()");
                  rs.next();
