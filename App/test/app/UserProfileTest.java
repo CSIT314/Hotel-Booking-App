@@ -234,9 +234,10 @@ public class UserProfileTest {
                 // Change Status to Cancelled    
                 model = (DefaultTableModel) Bookings.getModel();
                 model.setRowCount(0);
-                int rowIndex = Bookings.getSelectedRow();
                 Bookings.setRowSelectionInterval(0, 0);
-                int bookid= (int) model.getValueAt(Bookings, 0);
+                int rowIndex = Bookings.getSelectedRow();
+                
+                int bookid= (int) model.getValueAt(rowIndex, 0);
                 int hid=(int) model.getValueAt(rowIndex,6);
                 java.sql.Date datein = (java.sql.Date) model.getValueAt(rowIndex,3);
                 java.sql.Date dateout = (java.sql.Date) model.getValueAt(rowIndex,4);
@@ -331,10 +332,12 @@ public class UserProfileTest {
             
             // testing the code of button functionality
             try {
+                Bookings.setRowSelectionInterval(0, 0);
                 int rowIndex = Bookings.getSelectedRow();
                 //int rowIndex = Bookings.setRowSelectionInterval(0, 0);
                 model = (DefaultTableModel) Bookings.getModel();
                 int bookingID = (int) model.getValueAt(rowIndex, 0);
+               
                 java.sql.Date datein = (java.sql.Date) model.getValueAt(rowIndex,3);
                 java.sql.Date dateout= (java.sql.Date) model.getValueAt(rowIndex,4);
                 ResultSet rs = getResult("SELECT CURDATE()");
@@ -394,6 +397,7 @@ public class UserProfileTest {
             // testing the code of button functionality
             try {
                  // TODO add your handling code here:
+                Bookings.setRowSelectionInterval(0, 0);
                 int rowIndex = Bookings.getSelectedRow();
                 //int rowIndex = Bookings.setRowSelectionInterval(0, 0);
                
