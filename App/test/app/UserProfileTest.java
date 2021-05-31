@@ -92,23 +92,6 @@ public class UserProfileTest {
         String rdate = formater.format(gc.getTime());
         java.sql.Date randdate = new java.sql.Date(gc.getTimeInMillis());
         return randdate;  }
-
-    private String[] gethotelList(){
-
-        ResultSet RSet = getResult("SELECT DISTINCT Hotel_ID FROM booking_info");
-        ArrayList<String> hotels = new ArrayList<>(); 
-        try {
-            while(RSet.next()){
-                hotels.add(RSet.getString("City"));
-            }
-        }catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        String[] hotel_names = hotels.toArray(new String[0]);  
-        //for(int i=0;i<city_names.length;i++)
-            //System.out.println(city_names[i]);
-        return hotel_names;
-    }
      
     
     @Test
@@ -213,7 +196,7 @@ public class UserProfileTest {
             //get access to  button
             Cancel = (JButton) TestUtils.getChildNamed(frame, "Cancel");
             Bookings = (JTable)TestUtils.getChildNamed(frame, "Bookings");
-
+            Bookings.setRowSelectionInterval(0, 0);
             assertNotNull("Cancel Action Performed inaccessible", Cancel);
             assertNotNull("Frame component inaccessible", frame);
             
@@ -234,9 +217,9 @@ public class UserProfileTest {
                 // Change Status to Cancelled    
                 model = (DefaultTableModel) Bookings.getModel();
                 model.setRowCount(0);
-                Bookings.setRowSelectionInterval(0, 0);
-                int rowIndex = Bookings.getSelectedRow();
-                rowIndex = i; 
+                //Bookings.setRowSelectionInterval(0, 0);
+                int rowIndex = Bookings.getSelectedRow(); 
+                if (rowIndex < -1) { rowIndex = 0 ; }
                 int bookid= (int) model.getValueAt(rowIndex, 0);
                 System.out.println("bookid"+ bookid);
                 int hid=(int) model.getValueAt(rowIndex,6);
