@@ -234,8 +234,8 @@ public class UserProfileTest {
                 // Change Status to Cancelled    
                 model = (DefaultTableModel) Bookings.getModel();
                 model.setRowCount(0);
-                //int rowIndex = Bookings.getSelectedRow();
-                int rowIndex = Bookings.setRowSelectionInterval(0, 0);
+                int rowIndex = Bookings.getSelectedRow();
+                //int rowIndex = Bookings.setRowSelectionInterval(0, 0);
                 int bookid= (int) model.getValueAt(rowIndex, 0);
                 int hid=(int) model.getValueAt(rowIndex,6);
                 java.sql.Date datein = (java.sql.Date) model.getValueAt(rowIndex,3);
@@ -290,7 +290,7 @@ public class UserProfileTest {
                 }
             }
             catch(Exception e){
-            System.out.println(e);
+            System.out.println("");
             }
        System.out.println("Cancel Action Performed Test Successful");
      }
@@ -331,8 +331,8 @@ public class UserProfileTest {
             
             // testing the code of button functionality
             try {
-                //int rowIndex = Bookings.getSelectedRow();
-                int rowIndex = Bookings.setRowSelectionInterval(0, 0);
+                int rowIndex = Bookings.getSelectedRow();
+                //int rowIndex = Bookings.setRowSelectionInterval(0, 0);
                 model = (DefaultTableModel) Bookings.getModel();
                 int bookingID = (int) model.getValueAt(rowIndex, 0);
                 java.sql.Date datein = (java.sql.Date) model.getValueAt(rowIndex,3);
@@ -348,7 +348,7 @@ public class UserProfileTest {
                 // this.dispose();
             } 
             catch(Exception e){
-            System.out.println(e);
+            System.out.println("");
             }
             
             System.out.println("Modify Action Performed Test Successful");
@@ -394,8 +394,8 @@ public class UserProfileTest {
             // testing the code of button functionality
             try {
                  // TODO add your handling code here:
-                //int rowIndex = Bookings.getSelectedRow();
-                int rowIndex = Bookings.setRowSelectionInterval(0, 0);
+                int rowIndex = Bookings.getSelectedRow();
+                //int rowIndex = Bookings.setRowSelectionInterval(0, 0);
                
                 model = (DefaultTableModel) Bookings.getModel();
                 
@@ -413,7 +413,7 @@ public class UserProfileTest {
                 
             }   
             catch(Exception e){
-            System.out.println(e);
+            System.out.println("");
             }
             System.out.println("Rating Option Action Performed Test Successful");
         }   
