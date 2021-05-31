@@ -219,7 +219,7 @@ public class UserProfileTest {
                 model.setRowCount(0);
                 //Bookings.setRowSelectionInterval(0, 0);
                 int rowIndex = Bookings.getSelectedRow();
-                if (rowIndex <= -1) { rowIndex = 0 ; }
+                if (rowIndex <= -1) { rowIndex = i ; }
                 int bookid= (int) model.getValueAt(rowIndex, 0);
                 System.out.println("bookid"+ bookid);
                 int hid=(int) model.getValueAt(rowIndex,6);
